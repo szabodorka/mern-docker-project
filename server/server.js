@@ -1,5 +1,6 @@
 import express from "express"
-import User from "./model/user";
+import User from "./model/User.js";
+import mongoose from "mongoose";
 
 mongoose.connect("mongodb+srv://ivitsmilu:Jelszo12345@employees-cluster.rvprd.mongodb.net/");
 
@@ -34,5 +35,3 @@ app.post("/api/data", async (req, res) =>{
     }
 
 })
-
-app.listen
