@@ -36,11 +36,15 @@ app.post("/api/data", async (req, res) =>{
     }
 
 })
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
+
     let user = await User.findOne({ username: req.body.username });
+    console.log(req.body);
     if (!user) {
       return res.status(400).json({ error: "This username is not found!" });
     }
+    console.log("User found:", user);
+    
     const passwordCompare = await bcrypt.compare(req.body.password, user.password);
     if (!passwordCompare) {
       return res
@@ -48,9 +52,18 @@ app.post("/login", async (req, res) => {
         .json({ error: "Wrong password!" });
     }
     
-    res.json({ success: "Authenticated!" });
+    try {
+        console.log(user);
+        res.json(user)
+    } catch (error) {
+        console.error(error)
+    }
+
+    
+
   });
 
 app.listen(PORT, () => console.log("Server is running on port 3005"))
-})
+
+
 
