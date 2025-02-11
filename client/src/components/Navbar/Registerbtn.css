@@ -1,0 +1,19 @@
+.registerButton {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    position: fixed;
+    right: 90px;
+    top: 30px;
+    position: fixed;
+
+}
+
+.registerButton {
+    background-color: #e64a19;
+}
