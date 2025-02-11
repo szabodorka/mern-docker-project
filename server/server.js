@@ -11,7 +11,7 @@ const PORT = 3005;
 const app = express();
 app.use(express.json());
 
-app.post("/api/data", async (req, res) =>{
+app.post("/api/data", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const username = req.body.username
     const password = await bcrypt.hash(req.body.password, salt)
@@ -36,32 +36,37 @@ app.post("/api/data", async (req, res) =>{
     }
 
 })
-app.post("/api/login", async (req, res) => {
 
-    let user = await User.findOne({ username: req.body.username });
-    console.log(req.body);
-    if (!user) {
-      return res.status(400).json({ error: "This username is not found!" });
+app.get("/api/login", async (req, res) => {
+    const { username, password } = req.query
+
+    if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required!" })
     }
-    console.log("User found:", user);
-    
-    const passwordCompare = await bcrypt.compare(req.body.password, user.password);
-    if (!passwordCompare) {
-      return res
-        .status(400)
-        .json({ error: "Wrong password!" });
-    }
-    
+
     try {
-        console.log(user);
-        res.json(user)
+        let user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ error: "This username is not found!" })
+        }
+
+        const passwordCompare = await bcrypt.compare(password, user.password);
+        if (!passwordCompare) {
+            return res.status(400).json({ error: "Wrong password!" });
+        }
+
+        res.json({
+            id: user._id,
+            username: user.username,
+            password: user.password,
+            tokens: user.tokens
+        });
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
+});
 
-    
-
-  });
 
 app.listen(PORT, () => console.log("Server is running on port 3005"))
 

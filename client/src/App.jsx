@@ -11,6 +11,9 @@ function App() {
   const [isRegistering, setIsRegistering] = useState(false)
   const [isLoggingIn, setIsLoggingIn] = useState(false)
 
+  
+  console.log(user);
+  
   return (
 
     <>
@@ -25,6 +28,7 @@ function App() {
     </>
 
   )
+  
 }
 
 export default App

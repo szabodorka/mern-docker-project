@@ -5,7 +5,7 @@ export default function SignUp({setIsRegistering}) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [tokens, setTokens] = useState([])
+    const [tokens, setTokens] = useState([""])
 
     function onChange(event) {
 
@@ -37,7 +37,7 @@ export default function SignUp({setIsRegistering}) {
 
 
 return (
-    <form onSubmit={handleSubmit} className="htmlForm">
+    <form onSubmit={handleSubmit} className="form">
         <span className="input-span">
             <label htmlFor="username" className="label">Username</label>
             <input onChange={onChange} type="username" name="username" id="username"

@@ -11,29 +11,29 @@ export default function SignIn({setIsLoggingIn, setUser}) {
         const { name, value } = event.target
 
         name === "username" ? setUsername(value) : setPassword(value)   
+        
     }
 
-    async function handleLogin (event) {
-
-        event.preventDefault()
-        setIsLoggingIn(false)
-
-        const data = {username, password}
-
+    async function handleLogin(event) {
+        event.preventDefault();
+        setIsLoggingIn(false);
+    
         try {
-            const response = await fetch("/api/login", {
-                method: "POST",
-                body: JSON.stringify(data),
-              });
-              console.log(response);
-              const foundUser = await response.json()
-              console.log(foundUser);
-              
+            const response = await fetch(`/api/login?username=${username}&password=${password}`, {
+                method: "GET"
+            });
 
+            if(!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const foundUser = await response.json();
+            setUser(foundUser)
         } catch (error) {
-            console.error()
+            console.error(error);
         }
     }
+    
 
 
     return (
