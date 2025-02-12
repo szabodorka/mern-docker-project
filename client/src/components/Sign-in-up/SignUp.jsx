@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./SignUp.css"
 
-export default function SignUp({setIsRegistering}) {
+export default function SignUp({ setIsRegistering, setUser }) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -21,32 +21,35 @@ export default function SignUp({setIsRegistering}) {
         setIsRegistering(false)
 
         const data = { username, password, tokens }
+        
+        setUser(data) //ezzel az a tré hogy az id nem lesz benne ebben a userben.
 
         fetch('/api/data', {
             method: "POST",
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(data)
         })
-            .then(respone => respone.json())
-            .then(respone => {
-                console.log(respone)
+            .then(response => response.json())
+            .then(response => {
+                
+                console.log(response)
             })
             .catch(error => console.log(error))
     }
 
 
 
-return (
-    <form onSubmit={handleSubmit} className="form">
-        <span className="input-span">
-            <label htmlFor="username" className="label">Username</label>
-            <input onChange={onChange} type="username" name="username" id="username"
-            /></span>
-        <span className="input-span">
-            <label htmlFor="password" className="label">Password</label>
-            <input onChange={onChange} type="password" name="password" id="password" 
-            /></span>
-        <input className="submit" type="submit" value="Sign Up" />
-    </form>
-)
+    return (
+        <form onSubmit={handleSubmit} className="form">
+            <span className="input-span">
+                <label htmlFor="username" className="label">Username</label>
+                <input onChange={onChange} type="username" name="username" id="username"
+                /></span>
+            <span className="input-span">
+                <label htmlFor="password" className="label">Password</label>
+                <input onChange={onChange} type="password" name="password" id="password"
+                /></span>
+            <input className="submit" type="submit" value="Sign Up" />
+        </form>
+    )
 }

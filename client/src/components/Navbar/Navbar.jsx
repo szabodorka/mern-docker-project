@@ -4,7 +4,12 @@ import Loginbtn from "./Loginbtn";
 import Registerbtn from "./Registerbtn";
 import "./Navbar.css";
 
-function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn }) {
+function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn, setIsOnProfile }) {
+
+  function handleProfileClick() {
+    setIsOnProfile(true)
+  }
+
   return (
     <header className="Navbar">
       <nav>
@@ -16,13 +21,24 @@ function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn }) {
           </li>
 
           {user ? (
-            <button onClick={onLogOut} className="logout-btn">
-              Logout
-            </button>
+            <li>
+
+              <button onClick={onLogOut} className="logout-btn">
+                Logout
+              </button>
+
+              <button onClick={handleProfileClick}>
+
+                My profile
+
+              </button>
+
+            </li>
+
           ) : (
             <li>
-              <Registerbtn setIsRegistering={setIsRegistering} />
-              <Loginbtn setIsLoggingIn={setIsLoggingIn} />
+              <Registerbtn setIsRegistering={setIsRegistering} setIsLoggingIn={setIsLoggingIn} />
+              <Loginbtn setIsLoggingIn={setIsLoggingIn} setIsRegistering={setIsRegistering} />
             </li>
           )}
         </ul>

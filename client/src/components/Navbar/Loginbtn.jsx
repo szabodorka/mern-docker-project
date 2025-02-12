@@ -1,7 +1,8 @@
 import "./Loginbtn.css";
-export default function Loginbtn ({setIsLoggingIn}) {
+export default function Loginbtn ({setIsLoggingIn, setIsRegistering}) {
 
     function handleLogin(setIsLoggingIn) {
+        setIsRegistering(false)
         setIsLoggingIn(true)
     }
 

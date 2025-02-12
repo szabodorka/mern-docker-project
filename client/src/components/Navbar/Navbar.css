@@ -33,7 +33,7 @@
   flex-grow: 1;
 }
 
-.Navbar .logo {
-  font-size: 40px;
-  color: #58bc82;
+.logo {
+    position: fixed;
+    left: 10px;
 }

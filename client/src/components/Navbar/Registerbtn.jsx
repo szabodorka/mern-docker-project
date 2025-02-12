@@ -1,7 +1,8 @@
 import "./Registerbtn.css";
-export default function Registerbtn ({setIsRegistering}) {
+export default function Registerbtn ({setIsRegistering, setIsLoggingIn}) {
 
     function handleRegister(setIsRegistering) {
+        setIsLoggingIn(false)
         setIsRegistering(true)
     }
 
