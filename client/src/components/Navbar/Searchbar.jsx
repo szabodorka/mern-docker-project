@@ -4,10 +4,10 @@ export default function Searchbar () {
 
     return (
         
-        <div class="search-container">
-          <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Search..." />
-            <div class="search-icon">
+        <div className="search-container">
+          <div className="search-bar">
+            <input type="text" className="search-input" placeholder="Search..." />
+            <div className="search-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24"
@@ -21,7 +21,7 @@ export default function Searchbar () {
               </svg>
             </div>
           </div>
-          <div class="glow"></div>
+          <div className="glow"></div>
         </div>
     )
 
