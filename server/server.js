@@ -57,7 +57,6 @@ app.post("/api/login", async (req, res) => {
     res.json({
       id: user._id,
       username: user.username,
-      // password: user.password,
       tokens: user.tokens,
     });
   } catch (error) {

@@ -6,7 +6,7 @@ export default function Searchbar () {
         
         <div className="search-container">
           <div className="search-bar">
-            <input type="text" className="search-input" placeholder="Search..." />
+            <input type="text" className="search-input" placeholder="Search tokens..." />
             <div className="search-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
