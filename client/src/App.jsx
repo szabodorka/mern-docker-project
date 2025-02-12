@@ -9,36 +9,59 @@ import Welcome from "./components/Main/Welcome";
 function App() {
 
   const [usersTokens, setUsersTokens] = useState([]);
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const [user, setUser] = useState(null)
   const [isOnProfile, setIsOnProfile] = useState(false)
+  const [selectedToken, setSelectedToken] = useState(null)
+
+  const authStates = {
+    setIsRegistering,
+    setIsLoggingIn,
+    setIsOnProfile,
+    user,
+  }
   
   function handleLogOut() {
     setUser(null);
   }
 
   console.log(user);
-  
-
   return (
     <>
       <Navbar
-        user={user}
-        onLogOut={handleLogOut}
-        setIsRegistering={setIsRegistering}
-        setIsLoggingIn={setIsLoggingIn}
-        setIsOnProfile={setIsOnProfile}
+        authStates={authStates}
+        setSelectedToken={setSelectedToken}
+        handleLogOut = {handleLogOut}
       />
-
+  
       {isLoggingIn ? (
         <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} />
       ) : isRegistering ? (
         <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
-      ) :  !user ? <Welcome/> : isOnProfile ? <h1>Your on Profile!</h1> : <h1>Ur logged in!</h1>}
+      ) : !user ? (
+        <Welcome />
+      ) : (
+        <ProfileOrDashboard />
+      )}
+  
       <Footer />
     </>
   );
+  
+  function ProfileOrDashboard() {
+    if (isOnProfile) {
+      return <h1>Your on Profile!</h1>;
+    }
+
+    if (selectedToken) {
+      return <h1>You're logged in with a token selected!</h1>;
+    }
+  
+    return <h1>You're logged in!</h1>;
+  }
+  
+
 }
 
 export default App;

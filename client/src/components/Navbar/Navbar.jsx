@@ -4,10 +4,11 @@ import Loginbtn from "./Loginbtn";
 import Registerbtn from "./Registerbtn";
 import "./Navbar.css";
 
-function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn, setIsOnProfile }) {
+function Navbar({ authStates, setSelectedToken, handleLogOut }) {
+  const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user } = authStates;
 
   function handleProfileClick() {
-    setIsOnProfile(true)
+    setIsOnProfile(true);
   }
 
   return (
@@ -15,26 +16,18 @@ function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn, setIsOnProfi
       <nav>
         <ul>
           <li className="logo">BullRunners Portfolio Tracker</li>
-
           <li className="grow">
-            <Searchbar />
+            <Searchbar setSelectedToken={setSelectedToken} />
           </li>
-
           {user ? (
             <li>
-
-              <button onClick={onLogOut} className="logout-btn">
+              <button onClick={handleLogOut} className="logout-btn">
                 Logout
               </button>
-
               <button onClick={handleProfileClick}>
-
                 My profile
-
               </button>
-
             </li>
-
           ) : (
             <li>
               <Registerbtn setIsRegistering={setIsRegistering} setIsLoggingIn={setIsLoggingIn} />

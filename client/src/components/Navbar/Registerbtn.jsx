@@ -7,11 +7,9 @@ export default function Registerbtn ({setIsRegistering, setIsLoggingIn}) {
     }
 
     return (
-
         <div>
         <button className="registerButton" onClick={() => handleRegister(setIsRegistering)}>Register</button>
         </div>
-
     )
 
 }

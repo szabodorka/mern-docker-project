@@ -37,8 +37,6 @@ export default function SignUp({ setIsRegistering, setUser }) {
             .catch(error => console.log(error))
     }
 
-
-
     return (
         <form onSubmit={handleSubmit} className="form">
             <span className="input-span">
