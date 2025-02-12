@@ -2,10 +2,13 @@ import express from "express";
 import User from "./model/User.js";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-mongoose.connect(
-  "mongodb+srv://ivitsmilu:Jelszo12345@employees-cluster.rvprd.mongodb.net/"
-);
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 const PORT = 3005;
 
