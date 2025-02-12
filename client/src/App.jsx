@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import SignIn from "./components/Sign-in-up/SignIn";
@@ -24,7 +24,11 @@ function App() {
         setIsLoggingIn={setIsLoggingIn}
       />
 
-      {isLoggingIn ? <SignIn /> : isRegistering ? <SignUp /> : null}
+      {isLoggingIn ? (
+        <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} />
+      ) : isRegistering ? (
+        <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
+      ) : null}
       <Footer />
     </>
   );
