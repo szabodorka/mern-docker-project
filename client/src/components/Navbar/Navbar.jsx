@@ -6,7 +6,13 @@ import Banner from "./Banner";
 import "./Navbar.css";
 import "./Logoutbtn.css";
 
-function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn }) {
+function Navbar({ authStates, setSelectedToken, handleLogOut }) {
+  const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user } = authStates;
+
+  function handleProfileClick() {
+    setIsOnProfile(true);
+  }
+
   return (
     <header className="Navbar">
       <Banner />
@@ -18,17 +24,24 @@ function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn }) {
         )}
 
         <div className="grow">
-          <Searchbar />
+          <Searchbar setSelectedToken={setSelectedToken} />
         </div>
 
         {user ? (
-          <button onClick={onLogOut} className="logout-btn">
-            Logout
-          </button>
+          <div>
+            <button onClick={handleLogOut} className="logout-btn">
+              Logout
+            </button>
+            <button onClick={handleProfileClick}>
+              My profile
+            </button>
+          </div>
+
+
         ) : (
           <div className="navbar-buttons">
-            <Registerbtn setIsRegistering={setIsRegistering} />
-            <Loginbtn setIsLoggingIn={setIsLoggingIn} />
+            <Registerbtn setIsRegistering={setIsRegistering} setIsLoggingIn={setIsLoggingIn} />
+            <Loginbtn setIsLoggingIn={setIsLoggingIn} setIsRegistering={setIsRegistering}/>
           </div>
         )}
       </nav>
