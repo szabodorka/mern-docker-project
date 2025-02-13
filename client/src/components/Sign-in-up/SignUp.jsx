@@ -2,10 +2,9 @@ import { useState } from "react";
 import "./SignUp.css";
 
 export default function SignUp({ setIsRegistering, setUser }) {
-  
-   const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [tokens, setTokens] = useState([{name: null, amount: null}])
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [tokens, setTokens] = useState([{ name: null, amount: null }]);
 
   function onChange(event) {
     const { name, value } = event.target;
@@ -18,7 +17,7 @@ export default function SignUp({ setIsRegistering, setUser }) {
 
     const data = { username, password, tokens};
 
-    setUser(data); //ezzel az a tré hogy az id nem lesz benne ebben a userben.
+    setUser(data);
 
     fetch("/api/data", {
       method: "POST",

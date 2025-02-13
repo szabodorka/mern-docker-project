@@ -69,8 +69,6 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.patch("/api/add-token", async (req, res) => {
-  console.log(req.body);
-
   const { username, token } = req.body;
   const { name, amount } = token;
 

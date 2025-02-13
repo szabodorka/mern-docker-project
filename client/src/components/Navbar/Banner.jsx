@@ -42,8 +42,7 @@ export default function Banner() {
           {(globalCryptoData.total_volume.usd / 1e11).toFixed(3)}T
         </span>
         <span>
-          ₿ BTC.D: {" "}
-          {globalCryptoData.market_cap_percentage.btc.toFixed(2)}%
+          ₿ BTC.D: {globalCryptoData.market_cap_percentage.btc.toFixed(2)}%
         </span>
       </div>
     </div>
