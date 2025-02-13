@@ -1,7 +1,7 @@
 .Navbar {
   background-color: #333;
-  padding: 10px 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -11,17 +11,6 @@
   z-index: 1000;
 }
 
-.Navbar nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .Navbar nav ul li {
   color: white;
   font-size: 18px;
@@ -29,11 +18,35 @@
   padding: 10px;
 }
 
-.Navbar nav ul li.grow {
+.Navbar nav .grow {
   flex-grow: 1;
+  max-width: 400px;
+}
+
+.navbar-elements {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
 .Navbar .logo {
-  font-size: 40px;
-  color: #58bc82;
+  font-size: 30px;
+  background: -webkit-linear-gradient(#4cbb71, #cdd01f);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.Navbar img {
+  width: 120px;
+  height: auto;
+  margin-left: 30px;
+}
+
+.navbar-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
 }
