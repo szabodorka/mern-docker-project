@@ -1,4 +1,4 @@
-.loginButton {
+.logout-btn {
   background-color: #ff5722;
   color: white;
   border: none;
@@ -11,6 +11,6 @@
   text-align: center;
 }
 
-.loginButton {
+.logout-btn {
   background-color: #555555;
 }

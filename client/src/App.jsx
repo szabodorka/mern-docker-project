@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import SignIn from "./components/Sign-in-up/SignIn";
 import SignUp from "./components/Sign-in-up/SignUp";
 import Footer from "./components/Footer/Footer";
+import CryptoTable from "./components/CryptoTable/CryptoTable";
 
 function App() {
   const [usersTokens, setUsersTokens] = useState([]);
@@ -29,6 +30,7 @@ function App() {
       ) : isRegistering ? (
         <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
       ) : null}
+      {user && <CryptoTable />}
       <Footer />
     </>
   );
