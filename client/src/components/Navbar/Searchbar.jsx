@@ -49,7 +49,7 @@ export default function Searchbar({ setSelectedToken }) {
           placeholder="Search tokens..."
           value={query}
           onChange={handleInputChange}
-          onFocus={handleInputFocus}  // Show suggestions when input is focused
+          onFocus={handleInputFocus}  
         />
         <div className="search-icon">
           <svg

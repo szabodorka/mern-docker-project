@@ -55,7 +55,7 @@ function App() {
     }
 
     if (selectedToken) {
-      return <h1>You're logged in with a token selected!</h1>;
+      return <h1>You're logged in with a token selected! {selectedToken.name}</h1>;
     }
   
     return <h1>You're logged in!</h1>;
