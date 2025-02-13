@@ -60,7 +60,7 @@ function App() {
 
     if (selectedToken) {
       return (
-        <h1>You're logged in with a token selected! {selectedToken.name}</h1>
+        <h1>(Under construction!) 🚧 {selectedToken.name}</h1>
       );
     }
 
