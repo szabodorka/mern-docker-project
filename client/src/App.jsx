@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import SignIn from "./components/Sign-in-up/SignIn";
 import SignUp from "./components/Sign-in-up/SignUp";
 import Footer from "./components/Footer/Footer";
+import CryptoTable from "./components/CryptoTable/CryptoTable";
 import Welcome from "./components/Main/Welcome";
 
 function App() {
@@ -44,7 +45,6 @@ function App() {
       ) : (
         <ProfileOrDashboard />
       )}
-  
       <Footer />
     </>
   );
@@ -58,7 +58,7 @@ function App() {
       return <h1>You're logged in with a token selected! {selectedToken.name}</h1>;
     }
   
-    return <h1>You're logged in!</h1>;
+    return <CryptoTable/>
   }
   
 
