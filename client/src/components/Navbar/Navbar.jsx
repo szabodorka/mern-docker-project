@@ -20,7 +20,7 @@ function Navbar({ authStates, setSelectedToken, handleLogOut }) {
         {user ? (
           <img src="../images/logo.png" className="logo" />
         ) : (
-          <span className="logo">BullRunners Portfolio Tracker</span>
+          <span className="logo">BullRunners</span>
         )}
 
         <div className="grow">

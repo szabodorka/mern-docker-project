@@ -24,20 +24,20 @@ export default function Banner() {
     <div className="banner">
       <div className="banner-elements">
         <span>
-          🪙 Active CryptoCurrencies: $
+          🪙 Active CryptoCurrencies:
           {globalCryptoData.active_cryptocurrencies}
         </span>
-        <span> 🔄 Markets: ${globalCryptoData.markets}</span>
+        <span> 🔄 Markets: {globalCryptoData.markets}</span>
         <span>
           🌎 Total Market Cap: $
-          {globalCryptoData.total_market_cap.usd.toLocaleString()}
+          {(globalCryptoData.total_market_cap.usd/1e12).toFixed(3)}T
         </span>
         <span>
           📈 24h Trading Volume: $
-          {globalCryptoData.total_volume.usd.toLocaleString()}
+          {(globalCryptoData.total_volume.usd /1e11).toFixed(3)}T
         </span>
         <span>
-          ₿ Bitcoin Dominancy:{" "}
+          ₿ BTC.D: {" "}
           {globalCryptoData.market_cap_percentage.btc.toFixed(2)}%
         </span>
       </div>
