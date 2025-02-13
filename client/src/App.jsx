@@ -4,11 +4,13 @@ import Navbar from "./components/Navbar/Navbar";
 import SignIn from "./components/Sign-in-up/SignIn";
 import SignUp from "./components/Sign-in-up/SignUp";
 import Footer from "./components/Footer/Footer";
+import MyProfile from "./components/Navbar/MyProfile";
 
 function App() {
   const [usersTokens, setUsersTokens] = useState([]);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isOnProfile, setIsOnProfile] = useState(false);
   const [user, setUser] = useState(null);
 
   function handleLogOut() {
@@ -22,13 +24,17 @@ function App() {
         onLogOut={handleLogOut}
         setIsRegistering={setIsRegistering}
         setIsLoggingIn={setIsLoggingIn}
+        setIsOnProfile={setIsOnProfile}
       />
 
       {isLoggingIn ? (
         <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} />
       ) : isRegistering ? (
         <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
-      ) : null}
+      ) : isOnProfile ? (
+        <MyProfile user={user} /> ) :
+      null
+      }
       <Footer />
     </>
   );

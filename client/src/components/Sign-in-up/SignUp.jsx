@@ -5,7 +5,7 @@ export default function SignUp({setIsRegistering}) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [tokens, setTokens] = useState([""])
+    const [tokens, setTokens] = useState([{name: "", amount: 0}])
 
     function onChange(event) {
 

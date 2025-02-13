@@ -12,7 +12,12 @@ const userSchema = new Schema ({
         type: String,
         required: true
     }, 
-    tokens: Array,
+    tokens: [
+        {
+          name: String, 
+          amount: Number 
+        }
+    ],
     createdAt: Date
 })
 

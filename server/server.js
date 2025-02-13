@@ -68,4 +68,29 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+app.patch("/api/add-token", async (req, res) => {
+  console.log(req.body);
+
+  const { username, token } = req.body;
+  const { name, amount } = token;
+
+  try {
+    let user = await User.findOne({ username });
+    if (!user) return res.status(400).json({ error: "User not found" });
+
+    let existingToken = user.tokens.find((t) => t.name === name);
+    if (existingToken) {
+      existingToken.amount += amount;
+    } else {
+      user.tokens.push({ name, amount });
+    }
+
+    let updatedUser = await user.save();
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("Error adding token:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => console.log("Server is running on port 3005"));
