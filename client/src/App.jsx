@@ -8,21 +8,20 @@ import CryptoTable from "./components/CryptoTable/CryptoTable";
 import Welcome from "./components/Main/Welcome";
 
 function App() {
-
   const [usersTokens, setUsersTokens] = useState([]);
-  const [isRegistering, setIsRegistering] = useState(false)
-  const [isLoggingIn, setIsLoggingIn] = useState(false)
-  const [user, setUser] = useState(null)
-  const [isOnProfile, setIsOnProfile] = useState(false)
-  const [selectedToken, setSelectedToken] = useState(null)
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isOnProfile, setIsOnProfile] = useState(false);
+  const [selectedToken, setSelectedToken] = useState(null);
 
   const authStates = {
     setIsRegistering,
     setIsLoggingIn,
     setIsOnProfile,
     user,
-  }
-  
+  };
+
   function handleLogOut() {
     setUser(null);
   }
@@ -33,9 +32,9 @@ function App() {
       <Navbar
         authStates={authStates}
         setSelectedToken={setSelectedToken}
-        handleLogOut = {handleLogOut}
+        handleLogOut={handleLogOut}
       />
-  
+
       {isLoggingIn ? (
         <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} />
       ) : isRegistering ? (
@@ -48,20 +47,20 @@ function App() {
       <Footer />
     </>
   );
-  
+
   function ProfileOrDashboard() {
     if (isOnProfile) {
       return <h1>Your on Profile!</h1>;
     }
 
     if (selectedToken) {
-      return <h1>You're logged in with a token selected! {selectedToken.name}</h1>;
+      return (
+        <h1>You're logged in with a token selected! {selectedToken.name}</h1>
+      );
     }
-  
-    return <CryptoTable/>
-  }
-  
 
+    return <CryptoTable />;
+  }
 }
 
 export default App;

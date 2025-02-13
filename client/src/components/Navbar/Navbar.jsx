@@ -28,20 +28,24 @@ function Navbar({ authStates, setSelectedToken, handleLogOut }) {
         </div>
 
         {user ? (
-          <div>
-            <button onClick={handleLogOut} className="logout-btn">
+          <div className="navbar-buttons">
+            <button onClick={handleLogOut} className="logoutButton">
               Logout
             </button>
-            <button onClick={handleProfileClick}>
+            <button onClick={handleProfileClick} className="myProfileButton">
               My profile
             </button>
           </div>
-
-
         ) : (
           <div className="navbar-buttons">
-            <Registerbtn setIsRegistering={setIsRegistering} setIsLoggingIn={setIsLoggingIn} />
-            <Loginbtn setIsLoggingIn={setIsLoggingIn} setIsRegistering={setIsRegistering}/>
+            <Registerbtn
+              setIsRegistering={setIsRegistering}
+              setIsLoggingIn={setIsLoggingIn}
+            />
+            <Loginbtn
+              setIsLoggingIn={setIsLoggingIn}
+              setIsRegistering={setIsRegistering}
+            />
           </div>
         )}
       </nav>
