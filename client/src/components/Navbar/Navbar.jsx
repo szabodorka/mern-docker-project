@@ -5,6 +5,7 @@ import Registerbtn from "./Registerbtn";
 import Banner from "./Banner";
 import "./Navbar.css";
 import "./Logoutbtn.css";
+import "./MyProfileButton.css";
 
 function Navbar({ authStates, setSelectedToken, handleLogOut }) {
   const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user } = authStates;
@@ -12,7 +13,7 @@ function Navbar({ authStates, setSelectedToken, handleLogOut }) {
   function handleProfileClick() {
     setIsOnProfile(true);
   }
-  
+
   return (
     <header className="Navbar">
       <Banner />
@@ -31,7 +32,10 @@ function Navbar({ authStates, setSelectedToken, handleLogOut }) {
             <button onClick={handleLogOut} className="logoutButton">
               Logout
             </button>
-            <button onClick={() => setIsOnProfile(true)} className="myProfileButton">
+            <button
+              onClick={() => setIsOnProfile(true)}
+              className="myProfileButton"
+            >
               My profile
             </button>
           </div>

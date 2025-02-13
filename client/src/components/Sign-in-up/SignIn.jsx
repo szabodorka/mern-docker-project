@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./SignIn.css";
 
-export default function SignIn({ setIsLoggingIn, setUser }) {
+export default function SignIn({ setIsLoggingIn, setUser, setIsRegistering }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -9,6 +9,11 @@ export default function SignIn({ setIsLoggingIn, setUser }) {
     const { name, value } = event.target;
 
     name === "username" ? setUsername(value) : setPassword(value);
+  }
+
+  function redirectToRegister() {
+    setIsLoggingIn(false);
+    setIsRegistering(true);
   }
 
   async function handleLogin(event) {
@@ -27,7 +32,6 @@ export default function SignIn({ setIsLoggingIn, setUser }) {
       }
 
       const foundUser = await response.json();
-      console.log(foundUser);
       setUser(foundUser);
     } catch (error) {
       console.error(error);
@@ -63,7 +67,8 @@ export default function SignIn({ setIsLoggingIn, setUser }) {
         Sign in
       </button>
       <span className="span">
-        Don't have an account? <a onClick={() => console.log("asd")}>Sign up</a>
+        Don't have an account?{" "}
+        <a onClick={() => redirectToRegister()}>Sign up</a>
       </span>
     </form>
   );

@@ -14,7 +14,6 @@ function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isOnProfile, setIsOnProfile] = useState(false);
   const [user, setUser] = useState(null);
-  const [isOnProfile, setIsOnProfile] = useState(false);
   const [selectedToken, setSelectedToken] = useState(null);
 
   const authStates = {
@@ -28,7 +27,6 @@ function App() {
     setUser(null);
   }
 
-  console.log(user);
   return (
     <>
       <Navbar
@@ -39,7 +37,11 @@ function App() {
       />
 
       {isLoggingIn ? (
-        <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} />
+        <SignIn
+          setIsLoggingIn={setIsLoggingIn}
+          setUser={setUser}
+          setIsRegistering={setIsRegistering}
+        />
       ) : isRegistering ? (
         <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
       ) : !user ? (
@@ -53,7 +55,7 @@ function App() {
 
   function ProfileOrDashboard() {
     if (isOnProfile) {
-      return <MyProfile user={user}/>
+      return <MyProfile user={user} />;
     }
 
     if (selectedToken) {

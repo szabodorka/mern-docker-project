@@ -1,4 +1,4 @@
-.logoutButton {
+.myProfileButton {
   font-size: 17px;
   background: transparent;
   border: none;
@@ -8,12 +8,12 @@
   position: relative;
   transition: 0.5s ease;
   cursor: pointer;
-  width: 120px;
+  width: 150px;
   height: auto;
   border-radius: 8px;
 }
 
-.logoutButton::before {
+.myProfileButton::before {
   content: "";
   position: absolute;
   left: 0;
@@ -23,26 +23,26 @@
   background-color: #4cbb71;
   transition: 0.1s ease;
   border-radius: 8px;
-  width: 120px;
+  width: 150px;
   height: auto;
 }
 
-.logoutButton:hover {
+.myProfileButton:hover {
   color: #1e1e2b;
   transition-delay: 0.1s;
   border-radius: 8px;
-  width: 120px;
+  width: 150px;
   height: auto;
 }
 
-.logoutButton:hover::before {
+.myProfileButton:hover::before {
   width: 100%;
   border-radius: 8px;
-  width: 120px;
+  width: 150px;
   height: auto;
 }
 
-.logoutButton::after {
+.myProfileButton::after {
   content: "";
   position: absolute;
   left: 0;
@@ -53,11 +53,11 @@
   transition: 0.1s ease;
   z-index: -1;
   border-radius: 8px;
-  width: 120px;
+  width: 150px;
   height: auto;
 }
 
-.logoutButton:hover::after {
+.myProfileButton:hover::after {
   height: 100%;
   transition-delay: 0.1s;
   color: aliceblue;
