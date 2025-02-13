@@ -12,7 +12,7 @@ function Navbar({ authStates, setSelectedToken, handleLogOut }) {
   function handleProfileClick() {
     setIsOnProfile(true);
   }
-
+  
   return (
     <header className="Navbar">
       <Banner />
@@ -26,13 +26,12 @@ function Navbar({ authStates, setSelectedToken, handleLogOut }) {
         <div className="grow">
           <Searchbar setSelectedToken={setSelectedToken} />
         </div>
-
         {user ? (
           <div className="navbar-buttons">
             <button onClick={handleLogOut} className="logoutButton">
               Logout
             </button>
-            <button onClick={handleProfileClick} className="myProfileButton">
+            <button onClick={() => setIsOnProfile(true)} className="myProfileButton">
               My profile
             </button>
           </div>

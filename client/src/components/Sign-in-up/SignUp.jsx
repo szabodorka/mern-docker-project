@@ -2,13 +2,13 @@ import { useState } from "react";
 import "./SignUp.css";
 
 export default function SignUp({ setIsRegistering, setUser }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [tokens, setTokens] = useState([""]);
+  
+   const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [tokens, setTokens] = useState([{name: "", amount: 0}])
 
   function onChange(event) {
     const { name, value } = event.target;
-
     name === "username" ? setUsername(value) : setPassword(value);
   }
 
