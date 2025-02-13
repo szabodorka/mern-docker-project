@@ -1,4 +1,4 @@
-.loginButton {
+.logoutButton {
   font-size: 17px;
   background: transparent;
   border: none;
@@ -13,21 +13,21 @@
   border-radius: 8px;
 }
 
-.loginButton::before {
+.logoutButton::before {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   height: 2px;
   width: 0;
-  background-color: #4cbb71;
-  transition: 0.5s ease;
+  background-color: #cdd01f;
+  transition: 0.1s ease;
   border-radius: 8px;
   width: 120px;
   height: auto;
 }
 
-.loginButton:hover {
+.logoutButton:hover {
   color: #1e1e2b;
   transition-delay: 0.1s;
   border-radius: 8px;
@@ -35,21 +35,21 @@
   height: auto;
 }
 
-.loginButton:hover::before {
+.logoutButton:hover::before {
   width: 100%;
   border-radius: 8px;
   width: 120px;
   height: auto;
 }
 
-.loginButton::after {
+.logoutButton::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   height: 0;
   width: 100%;
-  background-color: #4cbb71;
+  background-color: #cdd01f;
   transition: 0.1s ease;
   z-index: -1;
   border-radius: 8px;
@@ -57,7 +57,7 @@
   height: auto;
 }
 
-.loginButton:hover::after {
+.logoutButton:hover::after {
   height: 100%;
   transition-delay: 0.1s;
   color: aliceblue;

@@ -36,32 +36,32 @@ export default function SignIn({ setIsLoggingIn, setUser }) {
 
   return (
     <form onSubmit={handleLogin} className="form">
-      <span className="input-span">
-        <label htmlFor="username" className="label">
-          Username
-        </label>
-        <input
-          onChange={onChange}
-          type="username"
-          name="username"
-          id="username"
-        />
-      </span>
-      <span className="input-span">
-        <label htmlFor="password" className="label">
-          Password
-        </label>
-        <input
-          onChange={onChange}
-          type="password"
-          name="password"
-          id="password"
-        />
-      </span>
+      <label htmlFor="username" className="label">
+        Username
+      </label>
+      <input
+        className="input-span"
+        onChange={onChange}
+        type="username"
+        name="username"
+        id="username"
+      />
+      <label htmlFor="password" className="label">
+        Password
+      </label>
+      <input
+        className="input-span"
+        onChange={onChange}
+        type="password"
+        name="password"
+        id="password"
+      />
       <span className="span">
         <a href="#">Forgot password?</a>
       </span>
-      <input className="submit" type="submit" value="Log in" />
+      <button className="submit" type="submit" value="Log in">
+        Sign in
+      </button>
       <span className="span">
         Don't have an account? <a onClick={() => console.log("asd")}>Sign up</a>
       </span>

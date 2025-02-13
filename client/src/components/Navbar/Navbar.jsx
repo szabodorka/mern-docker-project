@@ -2,33 +2,51 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import Loginbtn from "./Loginbtn";
 import Registerbtn from "./Registerbtn";
+import Banner from "./Banner";
 import "./Navbar.css";
+import "./Logoutbtn.css";
 
-function Navbar({ user, onLogOut, setIsRegistering, setIsLoggingIn, setIsOnProfile }) {
+function Navbar({ authStates, setSelectedToken, handleLogOut }) {
+  const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user } = authStates;
+
+  function handleProfileClick() {
+    setIsOnProfile(true);
+  }
+  
   return (
     <header className="Navbar">
-      <nav>
-        <ul>
-          <li className="logo">BullRunners Portfolio Tracker</li>
+      <Banner />
+      <nav className="navbar-elements">
+        {user ? (
+          <img src="../images/logo.png" className="logo" />
+        ) : (
+          <span className="logo">BullRunners</span>
+        )}
 
-          <li className="grow">
-            <Searchbar />
-          </li>
-
-          {user ? (
-            <li>
-            <button onClick={onLogOut} className="logout-btn">
+        <div className="grow">
+          <Searchbar setSelectedToken={setSelectedToken} />
+        </div>
+        {user ? (
+          <div className="navbar-buttons">
+            <button onClick={handleLogOut} className="logoutButton">
               Logout
             </button>
-            <button onClick={() => setIsOnProfile(true)}>My Profile</button>
-            </li>
-          ) : (
-            <li>
-              <Registerbtn setIsRegistering={setIsRegistering} setIsLoggingIn={setIsLoggingIn} />
-              <Loginbtn setIsLoggingIn={setIsLoggingIn} setIsRegistering={setIsRegistering} />
-            </li>
-          )}
-        </ul>
+            <button onClick={() => setIsOnProfile(true)} className="myProfileButton">
+              My profile
+            </button>
+          </div>
+        ) : (
+          <div className="navbar-buttons">
+            <Registerbtn
+              setIsRegistering={setIsRegistering}
+              setIsLoggingIn={setIsLoggingIn}
+            />
+            <Loginbtn
+              setIsLoggingIn={setIsLoggingIn}
+              setIsRegistering={setIsRegistering}
+            />
+          </div>
+        )}
       </nav>
     </header>
   );
