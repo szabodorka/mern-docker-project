@@ -5,7 +5,7 @@ export default function SignUp({ setIsRegistering, setUser }) {
   
    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [tokens, setTokens] = useState([{name: "", amount: 0}])
+    const [tokens, setTokens] = useState([{name: null, amount: null}])
 
   function onChange(event) {
     const { name, value } = event.target;
@@ -16,7 +16,7 @@ export default function SignUp({ setIsRegistering, setUser }) {
     event.preventDefault();
     setIsRegistering(false);
 
-    const data = { username, password, tokens };
+    const data = { username, password, tokens};
 
     setUser(data); //ezzel az a tré hogy az id nem lesz benne ebben a userben.
 

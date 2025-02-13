@@ -27,7 +27,6 @@ export default function SignIn({ setIsLoggingIn, setUser }) {
       }
 
       const foundUser = await response.json();
-      console.log(foundUser);
       setUser(foundUser);
     } catch (error) {
       console.error(error);

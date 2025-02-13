@@ -14,7 +14,6 @@ function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isOnProfile, setIsOnProfile] = useState(false);
   const [user, setUser] = useState(null);
-  const [isOnProfile, setIsOnProfile] = useState(false);
   const [selectedToken, setSelectedToken] = useState(null);
 
   const authStates = {
