@@ -2,7 +2,7 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import Loginbtn from "./Loginbtn";
 import Registerbtn from "./Registerbtn";
-import Banner from "./Banner";
+import Banner from "../Banner/Banner";
 import "./Navbar.css";
 import "./Logoutbtn.css";
 import "./MyProfileButton.css";

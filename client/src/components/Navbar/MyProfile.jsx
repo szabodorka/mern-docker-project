@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./MyProfile.css";
 
 export default function MyProfile({ user }) {
   const [portfolio, setPortfolio] = useState([]);
@@ -26,12 +27,14 @@ export default function MyProfile({ user }) {
 
       const userPortfolio = user.tokens.map((t) => {
         const price = data[t.name]?.usd || 0;
-        const value = price * t.amount
-        return { ...t, price, value }
+        const value = price * t.amount;
+        return { ...t, price, value };
       });
 
       setPortfolio(userPortfolio);
-      setTotalValue(userPortfolio.reduce((total, token) => total + token.value, 0)); 
+      setTotalValue(
+        userPortfolio.reduce((total, token) => total + token.value, 0)
+      );
     } catch (error) {
       console.error("Error fetching portfolio:", error);
     }
@@ -92,14 +95,15 @@ export default function MyProfile({ user }) {
   }
 
   return (
-    <div>
+    <div className="myProfile">
       <h2>{user.username}'s Portfolio</h2>
       <h3>Total Portfolio Value: ${totalValue.toFixed(2)}</h3>
 
       <ul>
         {portfolio.map((token, index) => (
           <li key={index}>
-          {token.name}: {token.amount} - ${token.value.toFixed(2)} (Price: ${token.price})
+            {token.name}: {token.amount} - ${token.value.toFixed(2)} (Price: $
+            {token.price})
           </li>
         ))}
       </ul>
