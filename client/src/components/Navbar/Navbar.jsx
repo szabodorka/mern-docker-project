@@ -7,12 +7,10 @@ import "./Navbar.css";
 import "./Logoutbtn.css";
 import "./MyProfileButton.css";
 
-function Navbar({ authStates, setSelectedToken, handleLogOut }) {
-  const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user } = authStates;
+function Navbar({ userHandlers, setSelectedToken }) {
 
-  function handleProfileClick() {
-    setIsOnProfile(true);
-  }
+  const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user, handleLogOut } = userHandlers;
+
 
   return (
     <header className="Navbar">

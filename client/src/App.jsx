@@ -16,11 +16,12 @@ function App() {
   const [user, setUser] = useState(null);
   const [selectedToken, setSelectedToken] = useState(null);
 
-  const authStates = {
+  const userHandlers = {
     setIsRegistering,
     setIsLoggingIn,
     setIsOnProfile,
     user,
+    handleLogOut
   };
 
   function handleLogOut() {
@@ -31,11 +32,9 @@ function App() {
     <>
       <Navbar
         onLogOut={handleLogOut}
-        authStates={authStates}
+        userHandlers = {userHandlers}
         setSelectedToken={setSelectedToken}
-        handleLogOut={handleLogOut}
       />
-
       {isLoggingIn ? (
         <SignIn
           setIsLoggingIn={setIsLoggingIn}
@@ -43,7 +42,9 @@ function App() {
           setIsRegistering={setIsRegistering}
         />
       ) : isRegistering ? (
-        <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
+        <SignUp
+          setIsRegistering={setIsRegistering}
+          setUser={setUser} />
       ) : !user ? (
         <Welcome />
       ) : (
