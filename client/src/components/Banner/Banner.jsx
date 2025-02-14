@@ -7,15 +7,9 @@ export default function Banner() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("https://api.coingecko.com/api/v3/global", {
-
-          headers: {
-            "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK"
-          }
-
-        });
+        const response = await fetch("/api/global");
         const data = await response.json();
-        setGlobalCryptoData(data.data);
+        setGlobalCryptoData(data);
       } catch (error) {
         console.error("Error fetching data", error);
       }
