@@ -6,7 +6,8 @@ import SignUp from "./components/Sign-in-up/SignUp";
 import Footer from "./components/Footer/Footer";
 import MyProfile from "./components/Navbar/MyProfile";
 import CryptoTable from "./components/CryptoTable/CryptoTable";
-import Welcome from "./components/Main/Welcome";
+import Welcome from "./components/Welcome/Welcome";
+import ChosenToken from "./components/TokenInfo/ChosenToken";
 
 function App() {
   const [usersTokens, setUsersTokens] = useState([]);
@@ -61,7 +62,7 @@ function App() {
 
     if (selectedToken) {
       return (
-        <h1>(Under construction!) 🚧 {selectedToken.name}</h1>
+        <ChosenToken selectedToken={selectedToken}/>
       );
     }
 
