@@ -8,11 +8,7 @@ export default function ChosenToken({ selectedToken }) {
     return (
 
         <div>
-
-            <h1>{selectedToken.name}</h1>
-            
             <TokenDetails selectedToken={selectedToken}/>
-
         </div>
 
 
