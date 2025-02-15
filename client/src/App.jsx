@@ -47,7 +47,8 @@ function App() {
           setIsRegistering={setIsRegistering}
           setUser={setUser} />
       ) : !user ? (
-        <Welcome />
+        <Welcome /> 
+        
       ) : (
         <ProfileOrDashboard />
       )}
