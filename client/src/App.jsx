@@ -10,47 +10,78 @@ import Welcome from "./components/Welcome/Welcome";
 import ChosenToken from "./components/TokenInfo/ChosenToken";
 
 function App() {
-  const [usersTokens, setUsersTokens] = useState([]);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isOnProfile, setIsOnProfile] = useState(false);
   const [user, setUser] = useState(null);
   const [selectedToken, setSelectedToken] = useState(null);
 
-  const userHandlers = {
-    setIsRegistering,
-    setIsLoggingIn,
-    setIsOnProfile,
-    user,
-    handleLogOut
-  };
+  const [portfolio, setPortfolio] = useState([]);
+  const [totalValue, setTotalValue] = useState(0);
+
+  console.log(user);
+  
+  useEffect(() => {
+    if (user && user.tokens.length > 0) {
+      fetchPortfolio();
+      
+    }
+  }, [user]);
+
+  async function fetchPortfolio() {
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1`,
+        {
+          headers: {
+            "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK",
+          },
+        }
+      );
+      const data = await response.json();
+
+      const userPortfolio = user.tokens.map((t) => {
+        const tokenData = data.find((token) => token.id === t.name);
+        const price = tokenData?.current_price || 0;
+        const value = price * t.amount;
+        return { ...t, price, value };
+      });
+
+      setPortfolio(userPortfolio);
+      setTotalValue(userPortfolio.reduce((total, token) => total + token.value, 0));
+    } catch (error) {
+      console.error("Error fetching portfolio:", error);
+    }
+  }
 
   function handleLogOut() {
-    setUser(null);
+    setUser(null)
+    setPortfolio([])
+    setTotalValue(0)
+  }
+
+  function handleToMainPage () {
+    setIsLoggingIn(false)
+    setIsRegistering(false)
+    setIsOnProfile(false)
+    setSelectedToken(false)
   }
 
   return (
     <>
       <Navbar
-        onLogOut={handleLogOut}
-        userHandlers = {userHandlers}
+        userHandlers={{ setIsRegistering, setIsLoggingIn, setIsOnProfile, user, handleLogOut }}
         setSelectedToken={setSelectedToken}
+        handleToMainPage = {handleToMainPage}
       />
       {isLoggingIn ? (
-        <SignIn
-          setIsLoggingIn={setIsLoggingIn}
-          setUser={setUser}
-          setIsRegistering={setIsRegistering}
-        />
+        <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} setIsRegistering={setIsRegistering} />
       ) : isRegistering ? (
-        <SignUp
-          setIsRegistering={setIsRegistering}
-          setUser={setUser} />
-      ) : !user ? (
-        <Welcome /> 
-        
+        <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
+      ) : selectedToken ? (
+        <ChosenToken user={user} selectedToken={selectedToken} portfolio={portfolio} setPortfolio = {setPortfolio} /> 
       ) : (
-        <ProfileOrDashboard />
+        user ? <ProfileOrDashboard /> : <Welcome />
       )}
       <Footer />
     </>
@@ -58,15 +89,12 @@ function App() {
 
   function ProfileOrDashboard() {
     if (isOnProfile) {
-      return <MyProfile user={user} />;
+      return <MyProfile user={user} portfolio={portfolio} setPortfolio={setPortfolio} />;
     }
 
     if (selectedToken) {
-      return (
-        <ChosenToken selectedToken={selectedToken}/>
-      );
+      return <ChosenToken selectedToken={selectedToken} portfolio={portfolio} />;
     }
-
     return <CryptoTable />;
   }
 }

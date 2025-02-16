@@ -39,6 +39,7 @@
   background: -webkit-linear-gradient(#4cbb71, #cdd01f);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
+  cursor: pointer;
 }
 
 .Navbar img {

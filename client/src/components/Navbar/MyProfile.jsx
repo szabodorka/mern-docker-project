@@ -1,72 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./MyProfile.css";
 
-export default function MyProfile({ user }) {
-  const [portfolio, setPortfolio] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
+export default function MyProfile({ user, portfolio, setPortfolio }) {
   const [tokenInput, setTokenInput] = useState("");
   const [amountInput, setAmountInput] = useState("");
-
-  useEffect(() => {
-    if (user && user.tokens.length > 0) {
-      fetchPortfolio();
-    }
-  }, [user]);
-
-  async function fetchPortfolio() {
-    try {
-      const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1`,
-        {
-          headers: {
-            "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK",
-          },
-        }
-      );
-      const data = await response.json();
-
-      const userPortfolio = user.tokens.map((t) => {
-        const price = data[t.name]?.usd || 0;
-        const value = price * t.amount;
-        return { ...t, price, value };
-      });
-
-      setPortfolio(userPortfolio);
-      setTotalValue(
-        userPortfolio.reduce((total, token) => total + token.value, 0)
-      );
-    } catch (error) {
-      console.error("Error fetching portfolio:", error);
-    }
-  }
 
   async function addToken() {
     if (!tokenInput || !amountInput) return;
 
     try {
-      const tokenExists = portfolio.find((token) => token.name === tokenInput);
       const newAmount = parseInt(amountInput);
+      const tokenExists = portfolio.find((token) => token.name === tokenInput);
+
+      let updatedPortfolio;
 
       if (tokenExists) {
-        const updatedPortfolio = portfolio.map((token) => {
-          if (token.name === tokenInput) {
-            const updatedToken = {
-              ...token,
-              amount: token.amount + newAmount,
-              value: (token.amount + newAmount) * token.price,
-            };
-            return updatedToken;
-          }
-          return token;
-        });
-
-        setPortfolio(updatedPortfolio);
-
-        let total = 0;
-        updatedPortfolio.forEach((token) => {
-          total += token.value;
-        });
-        setTotalValue(total);
+        updatedPortfolio = portfolio.map((token) =>
+          token.name === tokenInput
+            ? { ...token, amount: token.amount + newAmount, value: (token.amount + newAmount) * token.price }
+            : token
+        );
       } else {
         const response = await fetch(
           `https://api.coingecko.com/api/v3/simple/price?ids=${tokenInput}&vs_currencies=usd`
@@ -75,35 +28,46 @@ export default function MyProfile({ user }) {
         const price = priceData[tokenInput]?.usd || 0;
         const value = price * newAmount;
 
-        const newToken = {
-          name: tokenInput,
-          amount: newAmount,
-          price,
-          value,
-        };
+        if (price === 0) {
+          alert("Invalid token name! Try again.");
+          return;
+        }
 
-        setPortfolio((prevPortfolio) => [...prevPortfolio, newToken]);
-
-        setTotalValue((prevTotal) => prevTotal + value);
+        updatedPortfolio = [...portfolio, { name: tokenInput, amount: newAmount, price, value }];
       }
 
-      setTokenInput("");
-      setAmountInput("");
+      setPortfolio(updatedPortfolio);
+
+      const response = await fetch("/api/add-token", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: user.username,
+          token: { name: tokenInput, amount: newAmount },
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update backend");
+
+      alert(`${tokenInput} successfully added with amount: ${amountInput}`)
+
+      setTokenInput("")
+      setAmountInput("")
     } catch (error) {
       console.error("Error adding token:", error);
+      alert("An error occurred while adding the token.");
     }
   }
 
   return (
     <div className="myProfile">
       <h2>{user.username}'s Portfolio</h2>
-      <h3>Total Portfolio Value: ${totalValue.toFixed(2)}</h3>
+      <h3>Total Portfolio Value: ${portfolio.reduce((total, token) => total + token.value, 0).toFixed(2)}</h3>
 
       <ul>
         {portfolio.map((token, index) => (
           <li key={index}>
-            {token.name}: {token.amount} - ${token.value.toFixed(2)} (Price: $
-            {token.price})
+            {token.name}: {token.amount} - ${token.value.toFixed(2)} (Price: ${token.price})
           </li>
         ))}
       </ul>
@@ -111,9 +75,9 @@ export default function MyProfile({ user }) {
       <h3>Add Cryptocurrency</h3>
       <input
         type="text"
-        placeholder="Token (e.g., bitcoin)"
+        placeholder="Token (e.g., Bitcoin)"
         value={tokenInput}
-        onChange={(e) => setTokenInput(e.target.value)}
+        onChange={(e) => setTokenInput(e.target.value.toLowerCase())}
       />
       <input
         type="number"
