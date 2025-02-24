@@ -8,16 +8,17 @@ export default function ChosenToken({ user, selectedToken, portfolio, setPortfol
 
     const [detailedData, setDetailedData] = useState(null)
 
-    console.log(user);
-
     useEffect(() => {
         async function fetchDetailedData() {
             try {
                 const response = await fetch(
-                    `https://api.coingecko.com/api/v3/coins/${selectedToken.id}`
-                );
+                    `https://api.coingecko.com/api/v3/coins/${selectedToken.id}`, {
+                    headers: {
+                        "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK"
+                    }
+                }
+                )
                 const data = await response.json();
-                console.log(data);
                 setDetailedData(data);
             } catch (error) {
                 console.error(error);
@@ -30,8 +31,6 @@ export default function ChosenToken({ user, selectedToken, portfolio, setPortfol
 
     }, [selectedToken]);
 
-
-
     if (!selectedToken) return <p>Loading...</p>;
 
     return (
@@ -40,7 +39,7 @@ export default function ChosenToken({ user, selectedToken, portfolio, setPortfol
                 <LeftDetails detailedData={detailedData} portfolio={portfolio} setPortfolio={setPortfolio} user={user} />
             </div>
             <div className="right-section">
-                <RightDetails detailedData = {detailedData}/>
+                <RightDetails detailedData={detailedData} />
             </div>
         </div>
     );

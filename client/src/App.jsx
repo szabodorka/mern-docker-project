@@ -18,8 +18,6 @@ function App() {
 
   const [portfolio, setPortfolio] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
-
-  console.log(user);
   
   useEffect(() => {
     if (user && user.tokens.length > 0) {
