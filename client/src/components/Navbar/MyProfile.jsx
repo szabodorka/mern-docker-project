@@ -75,7 +75,7 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
       <h3>Add Cryptocurrency</h3>
       <input
         type="text"
-        placeholder="Token (e.g., Bitcoin)"
+        placeholder="Token (e.g., bitcoin)"
         value={tokenInput}
         onChange={(e) => setTokenInput(e.target.value.toLowerCase())}
       />
