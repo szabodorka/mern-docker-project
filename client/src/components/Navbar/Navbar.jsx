@@ -7,7 +7,7 @@ import "./Navbar.css";
 import "./Logoutbtn.css";
 import "./MyProfileButton.css";
 
-function Navbar({ userHandlers, setSelectedToken }) {
+function Navbar({userHandlers, setSelectedToken, handleToMainPage}) {
 
   const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user, handleLogOut } = userHandlers;
 
@@ -17,9 +17,9 @@ function Navbar({ userHandlers, setSelectedToken }) {
       <Banner />
       <nav className="navbar-elements">
         {user ? (
-          <img src="../images/logo.png" className="logo" />
+          <img onClick = {handleToMainPage} src="../images/logo.png" className="logo" />
         ) : (
-          <span className="logo">BullRunners</span>
+          <span className="logo" onClick={handleToMainPage}>BullRunners</span>
         )}
 
         <div className="grow">
@@ -31,7 +31,7 @@ function Navbar({ userHandlers, setSelectedToken }) {
               Logout
             </button>
             <button
-              onClick={() => setIsOnProfile(true)}
+              onClick={() => {setIsOnProfile(true), setSelectedToken(null)}}
               className="myProfileButton"
             >
               My profile

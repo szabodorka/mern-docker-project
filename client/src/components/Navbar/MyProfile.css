@@ -16,12 +16,14 @@
 
 .myProfile {
   margin: 20px;
+  margin-top: 150px;
   padding: 10px;
   border: 2px solid #4cbb71;
   box-shadow: 10px 10px 1px rgba(0, 0, 0, 0.328);
   display: flex;
   flex-direction: column;
   width: 500px;
+  
 }
 
 .myProfile li {

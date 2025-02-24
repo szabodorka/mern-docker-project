@@ -33,13 +33,14 @@ export default function SignIn({ setIsLoggingIn, setUser, setIsRegistering }) {
 
       const foundUser = await response.json();
       setUser(foundUser);
+
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <form onSubmit={handleLogin} className="form">
+    <form onSubmit={handleLogin} className="signinform">
       <label htmlFor="username" className="label">
         Username
       </label>
@@ -60,15 +61,12 @@ export default function SignIn({ setIsLoggingIn, setUser, setIsRegistering }) {
         name="password"
         id="password"
       />
-      <span className="span">
-        <a href="#">Forgot password?</a>
-      </span>
       <button className="submit" type="submit" value="Log in">
-        Sign in
+        Sign In
       </button>
       <span className="span">
         Don't have an account?{" "}
-        <a onClick={() => redirectToRegister()}>Sign up</a>
+        <a className = "redirect" onClick={() => redirectToRegister()}>Sign up</a>
       </span>
     </form>
   );
