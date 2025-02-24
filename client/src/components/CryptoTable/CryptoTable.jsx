@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./CryptoTable.css";
-import { use } from "react";
 
 export default function CryptoTable() {
   const [cryptoData, setCryptoData] = useState([]);
@@ -9,13 +8,13 @@ export default function CryptoTable() {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1", {
-
-          headers: {
-            "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK"
+          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1",
+          {
+            headers: {
+              "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK",
+            },
           }
-
-        })
+        );
         const data = await response.json();
         setCryptoData(data);
       } catch (error) {

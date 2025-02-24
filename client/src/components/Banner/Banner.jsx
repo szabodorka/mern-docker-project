@@ -5,12 +5,12 @@ export default function Banner() {
   const [globalCryptoData, setGlobalCryptoData] = useState(null);
 
   useEffect(() => {
-
     async function fetchData() {
       try {
-
         if (!globalCryptoData) {
-          const response = await fetch("/api/global");
+          const response = await fetch("/api/global", {
+            headers: { "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK" },
+          });
           const data = await response.json();
           setGlobalCryptoData(data);
         }
@@ -20,7 +20,7 @@ export default function Banner() {
     }
 
     fetchData();
-  }, [globalCryptoData]); 
+  }, [globalCryptoData]);
 
   return !globalCryptoData ? (
     <p>Loading crypto data...</p>
