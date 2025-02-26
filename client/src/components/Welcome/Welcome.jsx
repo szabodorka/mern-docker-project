@@ -15,7 +15,6 @@ export default function Welcome() {
         tracker!
       </p>
       <img className="welcomeLogo" src={bull} alt="Description" />
-      <Footer />
     </div>
   );
 }

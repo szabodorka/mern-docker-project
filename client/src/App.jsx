@@ -18,11 +18,10 @@ function App() {
 
   const [portfolio, setPortfolio] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
-  
+
   useEffect(() => {
     if (user && user.tokens.length > 0) {
       fetchPortfolio();
-      
     }
   }, [user]);
 
@@ -46,40 +45,59 @@ function App() {
       });
 
       setPortfolio(userPortfolio);
-      setTotalValue(userPortfolio.reduce((total, token) => total + token.value, 0));
+      setTotalValue(
+        userPortfolio.reduce((total, token) => total + token.value, 0)
+      );
     } catch (error) {
       console.error("Error fetching portfolio:", error);
     }
   }
 
   function handleLogOut() {
-    setUser(null)
-    setPortfolio([])
-    setTotalValue(0)
+    setUser(null);
+    setPortfolio([]);
+    setTotalValue(0);
   }
 
-  function handleToMainPage () {
-    setIsLoggingIn(false)
-    setIsRegistering(false)
-    setIsOnProfile(false)
-    setSelectedToken(false)
+  function handleToMainPage() {
+    setIsLoggingIn(false);
+    setIsRegistering(false);
+    setIsOnProfile(false);
+    setSelectedToken(false);
   }
 
   return (
     <>
       <Navbar
-        userHandlers={{ setIsRegistering, setIsLoggingIn, setIsOnProfile, user, handleLogOut }}
+        userHandlers={{
+          setIsRegistering,
+          setIsLoggingIn,
+          setIsOnProfile,
+          user,
+          handleLogOut,
+        }}
         setSelectedToken={setSelectedToken}
-        handleToMainPage = {handleToMainPage}
+        handleToMainPage={handleToMainPage}
       />
       {isLoggingIn ? (
-        <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} setIsRegistering={setIsRegistering} />
+        <SignIn
+          setIsLoggingIn={setIsLoggingIn}
+          setUser={setUser}
+          setIsRegistering={setIsRegistering}
+        />
       ) : isRegistering ? (
         <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
       ) : selectedToken ? (
-        <ChosenToken user={user} selectedToken={selectedToken} portfolio={portfolio} setPortfolio = {setPortfolio} /> 
+        <ChosenToken
+          user={user}
+          selectedToken={selectedToken}
+          portfolio={portfolio}
+          setPortfolio={setPortfolio}
+        />
+      ) : user ? (
+        <ProfileOrDashboard />
       ) : (
-        user ? <ProfileOrDashboard /> : <Welcome />
+        <Welcome />
       )}
       <Footer />
     </>
@@ -87,11 +105,19 @@ function App() {
 
   function ProfileOrDashboard() {
     if (isOnProfile) {
-      return <MyProfile user={user} portfolio={portfolio} setPortfolio={setPortfolio} />;
+      return (
+        <MyProfile
+          user={user}
+          portfolio={portfolio}
+          setPortfolio={setPortfolio}
+        />
+      );
     }
 
     if (selectedToken) {
-      return <ChosenToken selectedToken={selectedToken} portfolio={portfolio} />;
+      return (
+        <ChosenToken selectedToken={selectedToken} portfolio={portfolio} />
+      );
     }
     return <CryptoTable />;
   }
