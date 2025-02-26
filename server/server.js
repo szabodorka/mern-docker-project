@@ -17,12 +17,59 @@ app.use(express.json());
 
 app.get("/api/global", async (req, res) => {
   try {
-    const response = await fetch("https://api.coingecko.com/api/v3/global");
+    const response = await fetch("https://api.coingecko.com/api/v3/global", {
+      headers: { "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK" },
+    });
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
     const data = await response.json();
     res.json(data.data);
   } catch (error) {
     console.error("Error fetching data", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/api/markets", async (req, res) => {
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1",
+      {
+        headers: {
+          "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Error fetching crypto data", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.get("/api/coins/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${id}`,
+      {
+        headers: {
+          "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Error fetching selected token", error);
   }
 });
 

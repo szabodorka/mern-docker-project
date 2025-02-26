@@ -8,9 +8,7 @@ export default function Banner() {
     async function fetchData() {
       try {
         if (!globalCryptoData) {
-          const response = await fetch("/api/global", {
-            headers: { "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK" },
-          });
+          const response = await fetch("/api/global");
           const data = await response.json();
           setGlobalCryptoData(data);
         }

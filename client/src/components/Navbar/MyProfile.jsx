@@ -17,7 +17,11 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
       if (tokenExists) {
         updatedPortfolio = portfolio.map((token) =>
           token.name === tokenInput
-            ? { ...token, amount: token.amount + newAmount, value: (token.amount + newAmount) * token.price }
+            ? {
+                ...token,
+                amount: token.amount + newAmount,
+                value: (token.amount + newAmount) * token.price,
+              }
             : token
         );
       } else {
@@ -33,7 +37,10 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
           return;
         }
 
-        updatedPortfolio = [...portfolio, { name: tokenInput, amount: newAmount, price, value }];
+        updatedPortfolio = [
+          ...portfolio,
+          { name: tokenInput, amount: newAmount, price, value },
+        ];
       }
 
       setPortfolio(updatedPortfolio);
@@ -49,10 +56,10 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
 
       if (!response.ok) throw new Error("Failed to update backend");
 
-      alert(`${tokenInput} successfully added with amount: ${amountInput}`)
+      alert(`${tokenInput} successfully added with amount: ${amountInput}`);
 
-      setTokenInput("")
-      setAmountInput("")
+      setTokenInput("");
+      setAmountInput("");
     } catch (error) {
       console.error("Error adding token:", error);
       alert("An error occurred while adding the token.");
@@ -62,14 +69,20 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
   return (
     <div className="myProfile">
       <h2>{user.username}'s Portfolio</h2>
-      <h3>Total Portfolio Value: ${portfolio.reduce((total, token) => total + token.value, 0).toFixed(2)}</h3>
+      <h3>
+        Total Portfolio Value: $
+        {portfolio.reduce((total, token) => total + token.value, 0).toFixed(2)}
+      </h3>
 
       <ul>
-        {portfolio.map((token, index) => (
-          <li key={index}>
-            {token.name}: {token.amount} - ${token.value.toFixed(2)} (Price: ${token.price})
-          </li>
-        ))}
+        {portfolio
+          .filter((token) => token.value > 0)
+          .map((token, index) => (
+            <li key={index}>
+              {token.name}: {token.amount} - ${token.value.toFixed(2)} (Price: $
+              {token.price})
+            </li>
+          ))}
       </ul>
 
       <h3>Add Cryptocurrency</h3>

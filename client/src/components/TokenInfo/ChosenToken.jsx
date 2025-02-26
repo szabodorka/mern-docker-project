@@ -15,14 +15,10 @@ export default function ChosenToken({
   useEffect(() => {
     async function fetchDetailedData() {
       try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${selectedToken.id}`,
-          {
-            headers: {
-              "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK",
-            },
-          }
-        );
+        const response = await fetch(`api/coins/${selectedToken.id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch token");
+        }
         const data = await response.json();
         setDetailedData(data);
       } catch (error) {
@@ -50,6 +46,7 @@ export default function ChosenToken({
       <div className="right-section">
         <RightDetails detailedData={detailedData} />
       </div>
+      {/* <Footer /> */}
     </div>
   );
 }
