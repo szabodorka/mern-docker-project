@@ -1,12 +1,11 @@
-/* Table Container */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 160px;
   margin-left: 0px;
   margin-right: 0px;
-  table-layout: fixed; /* Ensures that columns don't overflow */
-  overflow-x: hidden;  /* Prevent horizontal scroll */
+  table-layout: fixed;
+  overflow-x: hidden;
 }
 
 table,
@@ -20,8 +19,8 @@ th,
 td {
   padding: 12px 15px;
   text-align: left;
-  word-wrap: break-word; /* Prevents text from overflowing the cell */
-  white-space: nowrap; /* Ensures text stays within the cell and doesn't stretch */
+  word-wrap: break-word;
+  white-space: nowrap;
 }
 
 th {

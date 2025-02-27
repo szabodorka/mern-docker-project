@@ -46,7 +46,6 @@ export default function ChosenToken({
       <div className="right-section">
         <RightDetails detailedData={detailedData} />
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }
