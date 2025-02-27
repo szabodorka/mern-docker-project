@@ -1,5 +1,7 @@
 import { useState } from "react"
 import Overview from "./Sections/OverView";
+import Markets from "./Sections/Markets";
+import Community from "./Sections/Community";
 
 export default function RightDetails({ detailedData }) {
 
@@ -10,11 +12,11 @@ export default function RightDetails({ detailedData }) {
             case "overview":
                 return <Overview detailedData={detailedData}/>
             case "markets":
-                return <div>Markets content here</div>;
+                return <Markets detailedData={detailedData}/>;
             case "historical":
                 return <div>Historical Data content here</div>;
             case "community":
-                return <div>Community content here</div>;
+                return <Community detailedData={detailedData}/>
             default:
                 return <div>Overview content here</div>;
         }

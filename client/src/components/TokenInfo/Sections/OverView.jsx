@@ -19,8 +19,7 @@ const Overview = ({ detailedData }) => {
 
   return (
     <div>
-      <h2>Overview</h2>
-
+  
       <div className="about-section">
         <h3>About {detailedData.name}</h3>
         <p>{detailedData?.description?.en || "No description available."}</p>
