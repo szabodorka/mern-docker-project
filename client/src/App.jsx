@@ -20,8 +20,18 @@ function App() {
   const [totalValue, setTotalValue] = useState(0);
 
   useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  useEffect(() => {
     if (user && user.tokens.length > 0) {
+      localStorage.setItem("user", JSON.stringify(user));
       fetchPortfolio();
+    } else {
+      localStorage.removeItem("user");
     }
   }, [user]);
 
