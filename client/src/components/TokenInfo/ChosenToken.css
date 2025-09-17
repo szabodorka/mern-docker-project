@@ -7,8 +7,8 @@
 
 .left-section {
   flex: 1;
-  max-width: 100%; /* Full width for small screens */
-  width: 100%; /* Ensure it scales on small screens */
+  max-width: 100%;
+  width: 100%;
 }
 
 .right-section {
@@ -16,7 +16,6 @@
   background: #242424;
   border-radius: 10px;
   padding: 20px;
-  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
   width: 100%;
   max-width: 800px;
   margin-top: 60px;
@@ -66,9 +65,8 @@
   scale: 1;
 }
 
-/* Responsive for smaller screens */
 @media (max-width: 800px) {
   .chosen-token {
-    flex-direction: column; /* Stack left and right sections vertically */
+    flex-direction: column;
   }
 }

@@ -94,17 +94,6 @@
 
 .error__title {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 18px;
   color: #fff;
 }
-
-/* .error__close {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.error__close path {
-  fill: #fff;
-} */

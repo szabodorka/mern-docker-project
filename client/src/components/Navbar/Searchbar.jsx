@@ -6,7 +6,6 @@ export default function Searchbar({ setSelectedToken }) {
   const [tokens, setTokens] = useState([]);
   const [isSuggestionsVisible, setSuggestionsVisible] = useState(true);
 
-  // Use a ref to store the debounced version of the fetchTokens function
   const fetchTokens = useCallback(async () => {
     try {
       const response = await fetch(
@@ -23,7 +22,6 @@ export default function Searchbar({ setSelectedToken }) {
     }
   }, []);
 
-  // Fetch tokens only once when the component mounts
   useEffect(() => {
     fetchTokens();
   }, [fetchTokens]);
@@ -32,7 +30,6 @@ export default function Searchbar({ setSelectedToken }) {
     token.name.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Debounced input change handler
   function handleInputChange(e) {
     setQuery(e.target.value);
   }
