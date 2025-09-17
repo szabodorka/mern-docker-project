@@ -32,7 +32,7 @@ export default function SignUp({ setIsRegistering, setUser }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmit} className="signupform">
       <label htmlFor="username" className="label">
         Username
       </label>

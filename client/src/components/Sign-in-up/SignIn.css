@@ -1,4 +1,4 @@
-.form {
+.signinform {
   --bg-light: #efefef;
   --bg-dark: #707070;
   --clr: #58bc82;
@@ -10,20 +10,20 @@
   width: 100%;
   max-width: 350px;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.form .input-span {
+.signinform .input-span {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.form input[type="username"],
-.form input[type="password"] {
+.signinform input[type="username"],
+.signinform input[type="password"] {
   border-radius: 0.75rem;
   padding: 1.25rem 1rem;
   width: 100%;
@@ -32,8 +32,8 @@
   outline: 2px solid var(--bg-dark);
 }
 
-.form input[type="username"]:focus,
-.form input[type="password"]:focus {
+.signinform input[type="username"]:focus,
+.signinform input[type="password"]:focus {
   outline: 2px solid var(--clr);
 }
 
@@ -44,8 +44,8 @@
   font-size: 20px;
 }
 
-.form .submit {
-  padding: 1.25rem 1rem;
+.signinform .submit {
+  padding: 1.15rem 1rem;
   width: 100%;
   border-radius: 3.5rem;
   background-color: var(--bg-dark);
@@ -54,10 +54,57 @@
   cursor: pointer;
   transition: all 300ms;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
-.form .submit:hover {
+.signinform .submit:hover {
   background-color: var(--clr);
   color: var(--bg-dark);
 }
+
+.redirect {
+  cursor: pointer;
+  color: #58bc82;
+}
+
+.error {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: #ef665b;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px -3px #111;
+}
+
+.error__icon {
+  width: 20px;
+  height: 20px;
+  transform: translateY(-2px);
+  margin-right: 8px;
+}
+
+.error__icon path {
+  fill: #fff;
+}
+
+.error__title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* .error__close {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.error__close path {
+  fill: #fff;
+} */

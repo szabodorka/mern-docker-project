@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./Searchbar.css";
 
 export default function Searchbar({ setSelectedToken }) {
@@ -6,7 +6,8 @@ export default function Searchbar({ setSelectedToken }) {
   const [tokens, setTokens] = useState([]);
   const [isSuggestionsVisible, setSuggestionsVisible] = useState(true);
 
-  const fetchTokens = async () => {
+  // Use a ref to store the debounced version of the fetchTokens function
+  const fetchTokens = useCallback(async () => {
     try {
       const response = await fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1", {
@@ -20,17 +21,18 @@ export default function Searchbar({ setSelectedToken }) {
     } catch (error) {
       console.error("Error fetching tokens:", error);
     }
-  };
+  }, []);
 
- 
+  // Fetch tokens only once when the component mounts
   useEffect(() => {
     fetchTokens();
-  }, []);
+  }, [fetchTokens]);
 
   const filteredTokens = tokens.filter((token) =>
     token.name.toLowerCase().includes(query.toLowerCase())
   );
 
+  // Debounced input change handler
   function handleInputChange(e) {
     setQuery(e.target.value);
   }

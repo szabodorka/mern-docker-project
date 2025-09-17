@@ -1,37 +1,133 @@
-.myProfile input {
-  border-radius: 0.75rem;
-  padding: 1.25rem 1rem;
-  border: 2px solid black;
-  background-color: rgba(128, 128, 128, 0.195);
-  border-radius: 8px;
-  outline: 2px solid var(--bg-dark);
-  font-size: 18px;
-}
-
-.myProfile button {
-  border-radius: 0.75rem;
-  padding: 1.25rem 1rem;
-  font-size: 18px;
-}
-
 .myProfile {
   margin: 20px;
+  margin-top: 170px;
   padding: 10px;
-  border: 2px solid #4cbb71;
-  box-shadow: 10px 10px 1px rgba(0, 0, 0, 0.328);
   display: flex;
   flex-direction: column;
-  width: 500px;
-}
-
-.myProfile li {
-  display: block;
+  justify-content: center;
+  align-items: center;
+  width: 80vh;
+  max-height: 70%;
+  border-radius: 30px;
+  background: #212121;
+  box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60);
 }
 
 .myProfile h2 {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 30px;
+  margin-bottom: 0px;
+  border-radius: 50px;
+  background: transparent;
+  color: #fff;
+  width: fit-content;
   font-size: 40px;
   font-weight: 600;
-  text-shadow: 1px 1px rgba(103, 101, 101, 0.48);
-  color: -webkit-linear-gradient(#4cbb71, #cdd01f);
-  text-align: center;
+  transition: background-color 0.3s ease;
+  background: linear-gradient(to right, #c9a340, #6ab04c, #a67c52);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.myProfile h3 {
+  background: linear-gradient(to right, #c9a340, #6ab04c, #a67c52);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+}
+
+.myProfile input {
+  position: relative;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: white;
+  border: 2px solid black;
+  outline: 2px solid var(--bg-dark);
+  border-radius: 34px;
+  background-color: transparent;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  margin-bottom: 20px;
+  width: 60%;
+}
+
+.myProfile button {
+  cursor: pointer;
+  position: relative;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: white;
+  border: 2px solid #58bc82;
+  border-radius: 34px;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+.myProfile button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: #58bc82;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.myProfile button:hover::before {
+  scale: 3;
+}
+
+.myProfile button:hover {
+  color: #212121;
+  scale: 1.1;
+  box-shadow: 0 0px 20px rgba(98, 193, 119, 0.4);
+  border-color: #58bc82;
+}
+
+.myProfile button:active {
+  scale: 1;
+}
+
+.myProfile ul {
+  list-style: none;
+  padding: 5px;
+  width: 100%;
+  max-width: 500px;
+  background: #212121;
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px rgb(25, 25, 25), -10px -10px 20px rgb(60, 60, 60);
+}
+
+.myProfile li {
+  border-radius: 12px;
+  padding: 10px 20px;
+  color: whitesmoke;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.myProfile li:hover {
+  transform: translateY(-2px);
+  box-shadow: 12px 12px 24px rgb(25, 25, 25), -12px -12px 24px rgb(60, 60, 60);
+}
+
+.myProfile li span {
+  font-weight: 600;
+  color: #58bc82;
+}
+
+.myProfile li small {
+  font-size: 14px;
+  opacity: 0.7;
 }

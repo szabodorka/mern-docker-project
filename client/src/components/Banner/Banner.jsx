@@ -7,15 +7,18 @@ export default function Banner() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/global");
-        const data = await response.json();
-        setGlobalCryptoData(data);
+        if (!globalCryptoData) {
+          const response = await fetch("/api/global");
+          const data = await response.json();
+          setGlobalCryptoData(data);
+        }
       } catch (error) {
         console.error("Error fetching data", error);
       }
     }
+
     fetchData();
-  }, []);
+  }, [globalCryptoData]);
 
   return !globalCryptoData ? (
     <p>Loading crypto data...</p>
@@ -23,8 +26,7 @@ export default function Banner() {
     <div className="banner">
       <div className="banner-elements">
         <span>
-          🪙 Active CryptoCurrencies:
-          {globalCryptoData.active_cryptocurrencies}
+          🪙 Active CryptoCurrencies: {globalCryptoData.active_cryptocurrencies}
         </span>
         <span> 🔄 Markets: {globalCryptoData.markets}</span>
         <span>

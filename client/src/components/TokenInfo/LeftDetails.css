@@ -1,0 +1,185 @@
+/* General Styles */
+.tokenDetails {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    padding-top: 100px;
+    font-family: 'Arial', sans-serif;
+    flex-direction: column; /* Stack vertically for small screens */
+    height: auto;
+    min-height: 100vh; /* Ensure content always takes up the full screen */
+}
+
+/* Card Design */
+.token-card {
+    background: #1e1e1e;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.header img {
+    width: 30px;
+    height: 30px;
+}
+
+.price {
+    font-size: 1.rem;
+    margin: 10px 0;
+}
+
+.change {
+    color: #ff6464;
+    font-weight: bold;
+}
+
+/* Market Stats */
+.market-stats p {
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    border-radius: 8px;
+    margin: 5px 0;
+}
+
+/* Add to Portfolio Button */
+.addToBtn button {
+    background: #58bc82;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.addToBtn button:hover {
+    background: #C9A340;
+}
+
+/* Amount Input Form */
+.add-form {
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-form span {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.add-form input {
+    width: 80%;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    background: #fff;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Add & Cancel Buttons */
+.add-form button {
+    width: 80%;
+    padding: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 5px;
+}
+
+.add-form button:first-of-type {
+    background: #58bc82;
+    color: white;
+}
+
+.add-form button:first-of-type:hover {
+    background: #4fa873;
+}
+
+.add-form button:last-of-type {
+    background: #ff6464;
+    color: white;
+}
+
+.add-form button:last-of-type:hover {
+    background: #e55555;
+}
+
+/* Info Section */
+.info {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.info h2 {
+    border-bottom: 2px solid #58bc82;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.info p {
+    font-size: 0.9rem;
+    margin: 8px 0;
+}
+
+.info a {
+    color: #58bc82;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.info a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .Navbar {
+        position: relative; /* Remove fixed positioning on small screens */
+    }
+
+    /* Adjust tokenDetails padding-top only on smaller screens */
+    .tokenDetails {
+        padding-top: 120px; /* Slightly increase padding for small screens */
+    }
+
+    .token-card {
+        width: 90%; /* Ensure card is not too wide */
+    }
+
+    .add-form input, .add-form button {
+        width: 100%; /* Make inputs/buttons full width */
+    }
+}
