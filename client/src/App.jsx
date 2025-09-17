@@ -14,34 +14,37 @@ function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isOnProfile, setIsOnProfile] = useState(false);
   const [user, setUser] = useState(null);
-  const [isOnProfile, setIsOnProfile] = useState(false);
   const [selectedToken, setSelectedToken] = useState(null);
 
-  const authStates = {
+  const userHandlers = {
     setIsRegistering,
     setIsLoggingIn,
     setIsOnProfile,
     user,
+    handleLogOut
   };
 
   function handleLogOut() {
     setUser(null);
   }
 
-  console.log(user);
   return (
     <>
       <Navbar
         onLogOut={handleLogOut}
-        authStates={authStates}
+        userHandlers = {userHandlers}
         setSelectedToken={setSelectedToken}
-        handleLogOut={handleLogOut}
       />
-
       {isLoggingIn ? (
-        <SignIn setIsLoggingIn={setIsLoggingIn} setUser={setUser} />
+        <SignIn
+          setIsLoggingIn={setIsLoggingIn}
+          setUser={setUser}
+          setIsRegistering={setIsRegistering}
+        />
       ) : isRegistering ? (
-        <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
+        <SignUp
+          setIsRegistering={setIsRegistering}
+          setUser={setUser} />
       ) : !user ? (
         <Welcome />
       ) : (
@@ -53,12 +56,12 @@ function App() {
 
   function ProfileOrDashboard() {
     if (isOnProfile) {
-      return <MyProfile user={user}/>
+      return <MyProfile user={user} />;
     }
 
     if (selectedToken) {
       return (
-        <h1>You're logged in with a token selected! {selectedToken.name}</h1>
+        <h1>(Under construction!) 🚧 {selectedToken.name}</h1>
       );
     }
 

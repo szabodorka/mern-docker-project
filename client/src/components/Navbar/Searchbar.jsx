@@ -3,13 +3,17 @@ import "./Searchbar.css";
 
 export default function Searchbar({ setSelectedToken }) {
   const [query, setQuery] = useState("");
-  const [tokens, setTokens] = useState([])
-  const [isSuggestionsVisible, setSuggestionsVisible] = useState(true)
+  const [tokens, setTokens] = useState([]);
+  const [isSuggestionsVisible, setSuggestionsVisible] = useState(true);
 
   const fetchTokens = async () => {
     try {
       const response = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1", {
+          headers: {
+            "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK"
+          }
+        }
       );
       const data = await response.json();
       setTokens(data);
@@ -18,6 +22,7 @@ export default function Searchbar({ setSelectedToken }) {
     }
   };
 
+ 
   useEffect(() => {
     fetchTokens();
   }, []);
@@ -32,12 +37,12 @@ export default function Searchbar({ setSelectedToken }) {
 
   function handleTokenSelect(token) {
     setSelectedToken(token);
-    setQuery(token.name); 
-    setSuggestionsVisible(false);  
+    setQuery(token.name);
+    setSuggestionsVisible(false);
   }
 
   function handleInputFocus() {
-    setSuggestionsVisible(true);  
+    setSuggestionsVisible(true);
   }
 
   return (
@@ -49,7 +54,7 @@ export default function Searchbar({ setSelectedToken }) {
           placeholder="Search tokens..."
           value={query}
           onChange={handleInputChange}
-          onFocus={handleInputFocus}  
+          onFocus={handleInputFocus}
         />
         <div className="search-icon">
           <svg
@@ -66,7 +71,6 @@ export default function Searchbar({ setSelectedToken }) {
         </div>
       </div>
 
-  
       {query && filteredTokens.length > 0 && isSuggestionsVisible ? (
         <div className="suggestions-container">
           {filteredTokens.map((token) => (

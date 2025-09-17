@@ -2,17 +2,16 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import Loginbtn from "./Loginbtn";
 import Registerbtn from "./Registerbtn";
-import Banner from "./Banner";
+import Banner from "../Banner/Banner";
 import "./Navbar.css";
 import "./Logoutbtn.css";
+import "./MyProfileButton.css";
 
-function Navbar({ authStates, setSelectedToken, handleLogOut }) {
-  const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user } = authStates;
+function Navbar({ userHandlers, setSelectedToken }) {
 
-  function handleProfileClick() {
-    setIsOnProfile(true);
-  }
-  
+  const { setIsRegistering, setIsLoggingIn, setIsOnProfile, user, handleLogOut } = userHandlers;
+
+
   return (
     <header className="Navbar">
       <Banner />
@@ -31,7 +30,10 @@ function Navbar({ authStates, setSelectedToken, handleLogOut }) {
             <button onClick={handleLogOut} className="logoutButton">
               Logout
             </button>
-            <button onClick={() => setIsOnProfile(true)} className="myProfileButton">
+            <button
+              onClick={() => setIsOnProfile(true)}
+              className="myProfileButton"
+            >
               My profile
             </button>
           </div>

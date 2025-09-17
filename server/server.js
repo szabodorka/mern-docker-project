@@ -15,6 +15,17 @@ const PORT = 3005;
 const app = express();
 app.use(express.json());
 
+app.get("/api/global", async (req, res) => {
+  try {
+    const response = await fetch("https://api.coingecko.com/api/v3/global");
+    const data = await response.json();
+    res.json(data.data);
+  } catch (error) {
+    console.error("Error fetching data", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.post("/api/data", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const username = req.body.username;
@@ -69,8 +80,6 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.patch("/api/add-token", async (req, res) => {
-  console.log(req.body);
-
   const { username, token } = req.body;
   const { name, amount } = token;
 
