@@ -22,7 +22,7 @@
   gap: 0.75rem;
 }
 
-.signupform input[type="username"],
+.signupform input[type="text"],
 .signupform input[type="password"] {
   border-radius: 0.75rem;
   padding: 1.25rem 1rem;
@@ -32,7 +32,7 @@
   outline: 2px solid var(--bg-dark);
 }
 
-.signupform input[type="username"]:focus,
+.signupform input[type="text"]:focus,
 .signupform input[type="password"]:focus {
   outline: 2px solid var(--clr);
 }

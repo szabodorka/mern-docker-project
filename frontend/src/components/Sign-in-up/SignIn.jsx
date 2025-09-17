@@ -1,20 +1,22 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SignIn.css";
 
 export default function SignIn({ setIsLoggingIn, setUser, setIsRegistering }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   function onChange(event) {
     const { name, value } = event.target;
-
     name === "username" ? setUsername(value) : setPassword(value);
   }
 
   function redirectToRegister() {
-    setIsLoggingIn(false);
-    setIsRegistering(true);
+    setIsLoggingIn?.(false);
+    setIsRegistering?.(true);
+    navigate("/register");
   }
 
   async function handleLogin(event) {
@@ -32,7 +34,8 @@ export default function SignIn({ setIsLoggingIn, setUser, setIsRegistering }) {
         return;
       }
       setUser(foundUser);
-      setIsLoggingIn(false);
+      setIsLoggingIn?.(false);
+      navigate("/");
     } catch (error) {
       console.error(error);
       setError("Login failed. Please try again later.");
@@ -47,8 +50,9 @@ export default function SignIn({ setIsLoggingIn, setUser, setIsRegistering }) {
       <input
         className="input-span"
         onChange={onChange}
-        type="username"
+        type="text"
         name="username"
+        value={username}
         id="username"
       />
       <label htmlFor="password" className="label">
@@ -59,6 +63,7 @@ export default function SignIn({ setIsLoggingIn, setUser, setIsRegistering }) {
         onChange={onChange}
         type="password"
         name="password"
+        value={password}
         id="password"
       />
       <button className="submit" type="submit" value="Log in">

@@ -22,7 +22,7 @@
   gap: 0.75rem;
 }
 
-.signinform input[type="username"],
+.signinform input[type="text"],
 .signinform input[type="password"] {
   border-radius: 0.75rem;
   padding: 1.25rem 1rem;
@@ -32,7 +32,7 @@
   outline: 2px solid var(--bg-dark);
 }
 
-.signinform input[type="username"]:focus,
+.signinform input[type="text"]:focus,
 .signinform input[type="password"]:focus {
   outline: 2px solid var(--clr);
 }

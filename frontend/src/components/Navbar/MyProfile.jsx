@@ -46,7 +46,7 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
       setPortfolio(updatedPortfolio);
 
       const response = await fetch("/api/add-token", {
-        method: "PATCH",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: user.username,

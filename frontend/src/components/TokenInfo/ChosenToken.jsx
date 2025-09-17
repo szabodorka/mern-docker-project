@@ -15,7 +15,7 @@ export default function ChosenToken({
   useEffect(() => {
     async function fetchDetailedData() {
       try {
-        const response = await fetch(`api/coins/${selectedToken.id}`);
+        const response = await fetch(`/api/coins/${selectedToken.id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch token");
         }

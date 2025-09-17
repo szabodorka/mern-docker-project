@@ -1,136 +1,122 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
-import SignIn from "./components/Sign-in-up/SignIn";
-import SignUp from "./components/Sign-in-up/SignUp";
-import Footer from "./components/Footer/Footer";
-import MyProfile from "./components/Navbar/MyProfile";
-import CryptoTable from "./components/CryptoTable/CryptoTable";
-import Welcome from "./components/Welcome/Welcome";
-import ChosenToken from "./components/TokenInfo/ChosenToken";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 
-function App() {
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isOnProfile, setIsOnProfile] = useState(false);
-  const [user, setUser] = useState(null);
-  const [selectedToken, setSelectedToken] = useState(null);
+import Navbar from "./components/Navbar/Navbar.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+import Welcome from "./components/Welcome/Welcome.jsx";
+import SignIn from "./components/Sign-in-up/SignIn.jsx";
+import SignUp from "./components/Sign-in-up/SignUp.jsx";
+import MyProfile from "./components/Navbar/MyProfile.jsx";
+import ChosenToken from "./components/TokenInfo/ChosenToken.jsx";
+import CryptoTable from "./components/CryptoTable/CryptoTable.jsx";
 
-  const [portfolio, setPortfolio] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
+export default function App() {
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || null;
+    } catch {
+      return null;
+    }
+  });
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (user && user.tokens.length > 0) {
-      localStorage.setItem("user", JSON.stringify(user));
-      fetchPortfolio();
-    } else {
-      localStorage.removeItem("user");
-    }
+    if (user) localStorage.setItem("user", JSON.stringify(user));
+    else localStorage.removeItem("user");
   }, [user]);
 
-  async function fetchPortfolio() {
-    try {
-      const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1`,
-        {
-          headers: {
-            "x-cg-demo-api-key": "CG-uBfevfq9VNo4mH54FXXjS4vK",
-          },
-        }
-      );
-      const data = await response.json();
+  const [selectedToken, setSelectedToken] = useState(null);
+  const [portfolio, setPortfolio] = useState([]);
 
-      const userPortfolio = user.tokens.map((t) => {
-        const tokenData = data.find((token) => token.id === t.name);
-        const price = tokenData?.current_price || 0;
-        const value = price * t.amount;
-        return { ...t, price, value };
-      });
+  return (
+    <BrowserRouter>
+      <Shell
+        user={user}
+        setUser={setUser}
+        selectedToken={selectedToken}
+        setSelectedToken={setSelectedToken}
+        portfolio={portfolio}
+        setPortfolio={setPortfolio}
+      />
+    </BrowserRouter>
+  );
+}
 
-      setPortfolio(userPortfolio);
-      setTotalValue(
-        userPortfolio.reduce((total, token) => total + token.value, 0)
-      );
-    } catch (error) {
-      console.error("Error fetching portfolio:", error);
-    }
-  }
+function Shell({
+  user,
+  setUser,
+  selectedToken,
+  setSelectedToken,
+  portfolio,
+  setPortfolio,
+}) {
+  const navigate = useNavigate();
+  const userHandlers = {
+    setIsRegistering: (on) => {
+      if (on) navigate("/register");
+    },
+    setIsLoggingIn: (on) => {
+      if (on) navigate("/login");
+    },
+    setIsOnProfile: (on) => {
+      navigate(on ? "/profile" : "/");
+    },
+    user,
+    handleLogOut: () => {
+      setUser(null);
+      setPortfolio([]);
+      navigate("/");
+    },
+  };
 
-  function handleLogOut() {
-    setUser(null);
-    setPortfolio([]);
-    setTotalValue(0);
-  }
+  const wrappedSetSelectedToken = (token) => {
+    setSelectedToken(token);
+    if (token?.id) navigate(`/token/${token.id}`);
+  };
 
-  function handleToMainPage() {
-    setIsLoggingIn(false);
-    setIsRegistering(false);
-    setIsOnProfile(false);
-    setSelectedToken(false);
-  }
+  const handleToMainPage = () => navigate("/");
 
   return (
     <>
       <Navbar
-        userHandlers={{
-          setIsRegistering,
-          setIsLoggingIn,
-          setIsOnProfile,
-          user,
-          handleLogOut,
-        }}
-        setSelectedToken={setSelectedToken}
+        userHandlers={userHandlers}
+        setSelectedToken={wrappedSetSelectedToken}
         handleToMainPage={handleToMainPage}
       />
-      {isLoggingIn ? (
-        <SignIn
-          setIsLoggingIn={setIsLoggingIn}
-          setUser={setUser}
-          setIsRegistering={setIsRegistering}
+      <Routes>
+        <Route path="/" element={user ? <CryptoTable /> : <Welcome />} />
+        <Route path="/login" element={<SignIn setUser={setUser} />} />
+        <Route path="/register" element={<SignUp setUser={setUser} />} />
+        <Route
+          path="/profile"
+          element={
+            <MyProfile
+              user={user}
+              setUser={setUser}
+              portfolio={portfolio}
+              setPortfolio={setPortfolio}
+            />
+          }
         />
-      ) : isRegistering ? (
-        <SignUp setIsRegistering={setIsRegistering} setUser={setUser} />
-      ) : selectedToken ? (
-        <ChosenToken
-          user={user}
-          selectedToken={selectedToken}
-          portfolio={portfolio}
-          setPortfolio={setPortfolio}
+        <Route
+          path="/token/:id"
+          element={
+            <ChosenToken
+              user={user}
+              selectedToken={selectedToken}
+              portfolio={portfolio}
+              setPortfolio={setPortfolio}
+            />
+          }
         />
-      ) : user ? (
-        <ProfileOrDashboard />
-      ) : (
-        <Welcome />
-      )}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
       <Footer />
     </>
   );
-
-  function ProfileOrDashboard() {
-    if (isOnProfile) {
-      return (
-        <MyProfile
-          user={user}
-          portfolio={portfolio}
-          setPortfolio={setPortfolio}
-        />
-      );
-    }
-
-    if (selectedToken) {
-      return (
-        <ChosenToken selectedToken={selectedToken} portfolio={portfolio} />
-      );
-    }
-    return <CryptoTable />;
-  }
 }
-
-export default App;

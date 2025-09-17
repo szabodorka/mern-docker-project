@@ -1,34 +1,36 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
 export default function SignUp({ setIsRegistering, setUser }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [tokens, setTokens] = useState([{ name: null, amount: null }]);
+  const [error, setError] = useState("");
 
   function onChange(event) {
     const { name, value } = event.target;
     name === "username" ? setUsername(value) : setPassword(value);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    setIsRegistering(false);
-
-    const data = { username, password, tokens};
-
-    setUser(data);
-
-    fetch("/api/data", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => console.log(error));
+    setIsRegistering?.(false);
+    setError("");
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) return setError(data.error || "Registration failed");
+      setUser(data);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      setError("Registration failed. Please try again.");
+    }
   }
 
   return (
@@ -39,9 +41,10 @@ export default function SignUp({ setIsRegistering, setUser }) {
       <input
         className="input-span"
         onChange={onChange}
-        type="username"
+        type="text"
         name="username"
         id="username"
+        value={username}
       />
 
       <label htmlFor="password" className="label">
@@ -53,6 +56,7 @@ export default function SignUp({ setIsRegistering, setUser }) {
         type="password"
         name="password"
         id="password"
+        value={password}
       />
       <input className="submit" type="submit" value="Sign Up" />
     </form>
