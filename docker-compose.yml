@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  backend:
+    image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/bullrunners-backend:latest
+    env_file:
+      - .env
+    restart: always
+
+  frontend:
+    image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/bullrunners-frontend:latest
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    restart: always
