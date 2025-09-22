@@ -1,9 +1,55 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./MyProfile.css";
+const VITE_COINGECKO_KEY = import.meta.env.VITE_COINGECKO_KEY;
 
 export default function MyProfile({ user, portfolio, setPortfolio }) {
   const [tokenInput, setTokenInput] = useState("");
   const [amountInput, setAmountInput] = useState("");
+
+  useEffect(() => {
+    if (!user?.username) {
+      setPortfolio([]);
+      return;
+    }
+
+    (async () => {
+      try {
+        const response = await fetch(
+          `/api/portfolio/${encodeURIComponent(user.username)}`
+        );
+        if (!response.ok)
+          throw new Error("Failed to load portfolio from backend");
+        const tokens = await response.json();
+
+        if (!Array.isArray(tokens) || tokens.length === 0) {
+          setPortfolio([]);
+          return;
+        }
+
+        const ids = tokens.map((t) => t.name).join(",");
+        let prices = {};
+        if (ids) {
+          const priceResp = await fetch(
+            `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`,
+            VITE_COINGECKO_KEY
+              ? { headers: { "x-cg-demo-api-key": VITE_COINGECKO_KEY } }
+              : undefined
+          );
+          prices = await priceResp.json();
+        }
+
+        const tokenData = tokens.map((t) => {
+          const price = prices?.[t.name]?.usd ?? 0;
+          const amount = Number(t.amount) || 0;
+          return { name: t.name, amount, price, value: price * amount };
+        });
+
+        setPortfolio(tokenData);
+      } catch (error) {
+        console.error("Error loading portfolio:", error);
+      }
+    })();
+  }, [user?.username, setPortfolio]);
 
   async function addToken() {
     if (!tokenInput || !amountInput) return;
