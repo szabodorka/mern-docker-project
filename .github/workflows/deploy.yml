@@ -60,13 +60,13 @@ jobs:
       - name: Deploy via SSM (docker compose pull/up)
         shell: bash
         run: |
-          set eux
+          set -euxo pipefail
           INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${PROJECT_NAME}-server" "Name=instance-state-name,Values=running" --query "Reservations[0].Instances[0].InstanceId" --output text)
-          ECR=${{ steps.ecr.outputs.registry}}
+          ECR=${{ steps.login-ecr.outputs.registry}}
 
           CMDS=$(cat <<'EOF'
           set eux
-          cd /opt/'"${PROJECT_NAME}"')
+          cd /opt/'"${PROJECT_NAME}"'
           aws ecr get-login-password --region '"${AWS_REGION}"' | docker login --username AWS --password-stdin '"${ECR}"'
           docker compose pull
           docker compose up -d
