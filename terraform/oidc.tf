@@ -37,7 +37,3 @@ resource "aws_iam_role_policy_attachment" "gh_admin" {
   role       = aws_iam_role.gh_actions.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
-
-output "github_role_arn" {
-  value = aws_iam_role.gh_actions.arn
-}

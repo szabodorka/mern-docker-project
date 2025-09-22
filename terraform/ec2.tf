@@ -17,7 +17,7 @@ resource "aws_instance" "app" {
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
   
   tags = {
-    Name = "${var.project_name}-ec2"
+    Name = "${var.project_name}-server"
   }
 
   user_data = templatefile("./user_data.sh.tmpl", {
