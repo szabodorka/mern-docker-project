@@ -1,0 +1,53 @@
+#!/bin/bash
+set -eux
+
+apt-get update -y
+apt-get install -y ca-certificates curl gnupg lsb-release
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+apt-get update -y
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+systemctl enable --now docker
+
+snap install aws-cli --classic
+snap install amazon-ssm-agent --classic
+systemctl enable snap.amazon-ssm-agent.amazon-ssm-agent.service
+systemctl start  snap.amazon-ssm-agent.amazon-ssm-agent.service
+
+sudo mkdir -p /opt/${project_name}
+cat >/opt/${project_name}/.env <<EOF
+MONGO_URI=${mongo_uri}
+COINGECKO_KEY=${coingecko_key}
+PORT=3005
+EOF
+
+cat >/opt/${project_name}/docker-compose.yml <<'YAML'
+services:
+  backend:
+    image: ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_backend}:latest
+    env_file:
+      - .env
+    ports:
+      - "3005:3005"
+    restart: always
+
+  frontend:
+    image: ${account_id}.dkr.ecr.${region}.amazonaws.com/${repo_frontend}:latest
+    environment:
+      - VITE_API_BASE=/api
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+YAML
+
+aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.${region}.amazonaws.com
+
+cd /opt/${project_name}
+docker compose pull
+docker compose up -d
