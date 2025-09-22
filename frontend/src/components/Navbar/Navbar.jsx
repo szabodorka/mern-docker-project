@@ -6,6 +6,7 @@ import Banner from "../Banner/Banner";
 import "./Navbar.css";
 import "./Logoutbtn.css";
 import "./MyProfileButton.css";
+import bull from "../../images/transBull.png";
 
 function Navbar({ userHandlers, setSelectedToken, handleToMainPage }) {
   const {
@@ -21,11 +22,7 @@ function Navbar({ userHandlers, setSelectedToken, handleToMainPage }) {
       <Banner />
       <nav className="navbar-elements">
         {user ? (
-          <img
-            onClick={handleToMainPage}
-            src="../images/logo.png"
-            className="logo"
-          />
+          <img onClick={handleToMainPage} src={bull} className="logo" />
         ) : (
           <span className="logo" onClick={handleToMainPage}>
             BullRunners
