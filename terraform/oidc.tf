@@ -20,10 +20,7 @@ data "aws_iam_policy_document" "gh_oidc_trust" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values = [
-        "repo:OWNER/REPO:ref:refs/heads/main",
-        "repo:OWNER/REPO:ref:refs/heads/feature/infra-terraform-setup"
-      ]
+      values = ["repo:OWNER/REPO:ref:*"]
     }
   }
 }
