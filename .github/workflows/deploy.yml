@@ -57,22 +57,18 @@ jobs:
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO_FRONTEND }}:latest
 
-      - name: Deploy via SSM (docker compose pull/up)
+      - name: Deploy via SSM
         shell: bash
+        env:
+          PROJECT_NAME: ${{ env.PROJECT_NAME }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+          ECR: ${{ steps.login-ecr.outputs.registry }}
         run: |
           set -euxo pipefail
-          INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${PROJECT_NAME}-server" "Name=instance-state-name,Values=running" --query "Reservations[0].Instances[0].InstanceId" --output text)
-          ECR=${{ steps.login-ecr.outputs.registry}}
 
-          CMDS=$(cat <<'EOF'
-          set eux
-          cd /opt/'"${PROJECT_NAME}"'
-          aws ecr get-login-password --region '"${AWS_REGION}"' | docker login --username AWS --password-stdin '"${ECR}"'
-          docker compose pull
-          docker compose up -d
-          EOF)
+          INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${PROJECT_NAME}-server" "Name=instance-state-name,Values=running" --query "Reservations[0].Instances[0].InstanceId" --output text)
+
           aws ssm send-command \
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
-            --parameters commands="$CMDS" \
-            --output text >/dev/null
+            --parameters "{\"commands\":[\"set -euxo pipefail\",\"cd /opt/${PROJECT_NAME}\",\"aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR}\",\"docker compose pull\",\"docker compose up -d\"]}"
