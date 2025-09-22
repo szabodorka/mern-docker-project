@@ -20,7 +20,17 @@ data "aws_iam_policy_document" "gh_oidc_trust" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values = ["repo:OWNER/REPO:ref:*"]
+      values   = ["repo:${var.github_owner}/*:ref:refs/heads/main"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:repository_owner"
+      values = [var.github_owner]
+    }
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:ref"
+      values   = ["refs/heads/main"]
     }
   }
 }

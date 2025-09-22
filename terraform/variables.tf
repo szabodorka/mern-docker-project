@@ -32,3 +32,7 @@ variable "instance_type" {
 variable "coingecko_key" {
   type = string
 }
+
+variable "github_owner" {
+  type = string
+}
