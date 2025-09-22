@@ -36,3 +36,7 @@ variable "coingecko_key" {
 variable "github_owner" {
   type = string
 }
+
+variable "github_repo" {
+  type = string
+}
