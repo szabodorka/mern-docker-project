@@ -18,6 +18,13 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Debug
+        run: |
+          echo "GITHUB_REPOSITORY=$GITHUB_REPOSITORY"
+          echo "GITHUB_REF=$GITHUB_REF"
+          echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
+          echo "GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME"
+
       - name: Checkout
         uses: actions/checkout@v4
 
