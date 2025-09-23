@@ -13,7 +13,6 @@ Dockerized **MERN (MongoDB, Express, React, Node.js)** crypto portfolio tracker 
   - [4. CI/CD Workflow](#4-cicd-workflow)
 - [Usage](#-usage)
 - [Limitations & Notes](#-limitations--notes)
-- [License](#-license)
 
 ---
 
