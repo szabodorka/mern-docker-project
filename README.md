@@ -98,17 +98,20 @@ This will create:
 
 ECR repositories must exist beforehand.
 
-3. GitHub Secrets
-   Add the following repository secret from Terraform outputs under Git repository Settings > Secrets and variables > Actions:
+### 3. GitHub Secrets
 
-   AWS_ROLE_ARN - The ARN of the OIDC role created by Terraform (e.g., arn:aws:iam::<account_id>:role/gh-actions-mern-docker)
+Add the following repository secret from Terraform outputs under Git repository Settings > Secrets and variables > Actions:
 
-4. CI/CD Workflow
-   On push to main, GitHub Actions will:
-   - Assume the OIDC role in AWS
-   - Build backend & frontend Docker images
-   - Push them to ECR
-   - Trigger SSM command on EC2 > docker compose pull && docker compose up -d.
+AWS_ROLE_ARN - The ARN of the OIDC role created by Terraform (e.g., arn:aws:iam::<account_id>:role/gh-actions-mern-docker)
+
+### 4. CI/CD Workflow
+
+On push to main, GitHub Actions will:
+
+- Assume the OIDC role in AWS
+- Build backend & frontend Docker images
+- Push them to ECR
+- Trigger SSM command on EC2 > docker compose pull && docker compose up -d.
 
 ## Usage
 
