@@ -1,18 +1,18 @@
 resource "aws_lb" "this" {
-  name               = "${var.project_name}-alb"
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb_sg.id]
+  name               = "${var.project_name}-nlb"
+  load_balancer_type = "network"
+  security_groups    = [aws_security_group.nlb_sg.id]
   subnets            = data.aws_subnets.default.ids
 
   tags = {
-    Name = "${var.project_name}-alb"
+    Name = "${var.project_name}-nlb"
   }
 }
 
 resource "aws_lb_target_group" "tg" {
   name        = "${var.project_name}-tg"
   port        = 80
-  protocol    = "HTTP"
+  protocol    = "TCP"
   vpc_id      = data.aws_vpc.default.id
   target_type = "instance"
 
@@ -29,7 +29,7 @@ resource "aws_lb_target_group" "tg" {
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.this.arn
   port              = 80
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     type = "forward"

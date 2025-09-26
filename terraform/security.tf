@@ -1,6 +1,6 @@
-# ALB Security Group
-resource "aws_security_group" "alb_sg" {
-  name        = "${var.project_name}-alb-sg"
+# NLB Security Group
+resource "aws_security_group" "nlb_sg" {
+  name        = "${var.project_name}-nlb-sg"
   description = "Load Balancer Security Group"
   vpc_id      = data.aws_vpc.default.id
   
@@ -29,7 +29,7 @@ resource "aws_security_group" "ec2_sg" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group.alb_sg.id]
+    security_groups = [aws_security_group.nlb_sg.id]
   }
 
   ingress {
