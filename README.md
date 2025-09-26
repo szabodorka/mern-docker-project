@@ -31,7 +31,7 @@ Dockerized **MERN (MongoDB, Express, React, Node.js)** crypto portfolio tracker 
 
 **Infrastructure**
 
-- ![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazon-aws&logoColor=FF9900) EC2 + ALB
+- ![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazon-aws&logoColor=FF9900) EC2 + NLB
 - ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?logo=terraform&logoColor=white) IaC modules
 - ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white) Docker & Docker Compose
 - ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&logoColor=white) CI/CD pipeline with OIDC
@@ -40,10 +40,10 @@ Dockerized **MERN (MongoDB, Express, React, Node.js)** crypto portfolio tracker 
 
 ## Architecture Overview
 
-- **Frontend (React + Nginx)** → served on an EC2 instance, load-balanced through AWS Application Load Balancer
+- **Frontend (React + Nginx)** → served on an EC2 instance, load-balanced through AWS Network Load Balancer
 - **Backend (Express API)** → runs as a Docker container on the same EC2 host, accessible under `/api`
 - **MongoDB Atlas** → managed cloud database, secured via IP whitelisting
-- **Infrastructure** → provisioned with Terraform (EC2 instance, Security Groups, ALB, IAM roles, OIDC)
+- **Infrastructure** → provisioned with Terraform (EC2 instance, Security Groups, NLB, IAM roles, OIDC)
 - **CI/CD** → GitHub Actions builds images, pushes them to ECR, and triggers deployment via SSM
 
 ---
@@ -55,7 +55,7 @@ Dockerized **MERN (MongoDB, Express, React, Node.js)** crypto portfolio tracker 
 - AWS account with permissions to create:
   - ECR repositories
   - IAM roles & OIDC provider
-  - EC2, Security Groups and ALB
+  - EC2, Security Groups and NLB
 - Terraform `>= 1.5`
 - GitHub repository for this project
 - MongoDB Atlas cluster (with `MONGO_URI` and whitelisted EC2 Public IP)
@@ -94,7 +94,7 @@ This will create:
 
 - EC2 instance (Ubuntu 24.04, with Docker, AWS CLI, SSM Agent installed)
 - IAM role for GitHub OIDC
-- Security Groups & ALB
+- Security Groups & NLB
 
 ECR repositories must exist beforehand.
 
@@ -115,11 +115,11 @@ On push to main, GitHub Actions will:
 
 ## Usage
 
-Access the application via the ALB DNS name printed in Terraform outputs.
+Access the application via the NLB DNS name printed in Terraform outputs.
 API base path is /api.
 
 ## Limitations & Notes
 
 - Requires existing ECR repositories
-- MongoDB Atlas must have ALB/EC2 IP whitelisted
+- MongoDB Atlas must have NLB/EC2 IP whitelisted
 - Single EC2 host – no auto-scaling yet
