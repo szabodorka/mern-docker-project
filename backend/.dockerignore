@@ -3,3 +3,6 @@ node_modules
 Dockerfile
 .dockerignore
 .env
+.env.example
+config.local.js
+config.local.example.js
