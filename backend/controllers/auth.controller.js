@@ -1,10 +1,7 @@
-import { Router } from "express";
 import bcrypt from "bcrypt";
 import User from "../model/User.js";
 
-const router = Router();
-
-router.post("/register", async (req, res) => {
+export async function Register(req, res) {
   try {
     const { username, password } = req.body;
     if (!username || !password)
@@ -31,9 +28,9 @@ router.post("/register", async (req, res) => {
     console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
+}
 
-router.post("/login", async (req, res) => {
+export async function Login(req, res) {
   try {
     const { username, password } = req.body;
     if (!username || !password)
@@ -54,6 +51,4 @@ router.post("/login", async (req, res) => {
     console.error(e);
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
-
-export default router;
+}

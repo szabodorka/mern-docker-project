@@ -1,24 +1,33 @@
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-import authRoutes from "./routes/auth.js";
-import coinsRoutes from "./routes/coins.js";
-import portfolioRoutes from "./routes/portfolio.js";
-
-dotenv.config();
+import { config } from "./config/config.js";
+import { Login, Register } from "./controllers/auth.controller.js";
+import { Global, Markets, Coin } from "./controllers/coins.controller.js";
+import { AddToken, UserPortfolio } from "./controllers/portfolio.controller.js";
+import { LogActivity } from "./middleware/LogActivity.js";
 
 const app = express();
 app.use(express.json());
 
-app.use("/api", authRoutes);
-app.use("/api", coinsRoutes);
-app.use("/api", portfolioRoutes);
+app.post("/api/register", LogActivity, Register);
+app.post("/api/login", LogActivity, Login);
+app.get("/api/global", Global);
+app.get("/api/markets", Markets);
+app.get("/api/coins/:id", Coin);
+app.post("/api/add-token", AddToken);
+app.get("/api/portfolio/:username", UserPortfolio);
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+async function main() {
+  try {
+    await mongoose.connect(config.mongoUri);
+    console.log("Connected to MongoDB");
+    app.listen(config.port, () =>
+      console.log(`Server is running on port ${config.port}`)
+    );
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    process.exit(1);
+  }
+}
 
-const PORT = 3005;
-
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+main();
