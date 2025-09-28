@@ -95,12 +95,16 @@ function Shell({
         <Route
           path="/profile"
           element={
-            <MyProfile
-              user={user}
-              setUser={setUser}
-              portfolio={portfolio}
-              setPortfolio={setPortfolio}
-            />
+            user ? (
+              <MyProfile
+                user={user}
+                setUser={setUser}
+                portfolio={portfolio}
+                setPortfolio={setPortfolio}
+              />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
         <Route
