@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./MyProfile.css";
-const VITE_COINGECKO_KEY = import.meta.env.VITE_COINGECKO_KEY;
 
 export default function MyProfile({ user, portfolio, setPortfolio }) {
   const [tokenInput, setTokenInput] = useState("");
@@ -12,30 +11,29 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
       return;
     }
 
+    let isActive = true;
+
     (async () => {
       try {
         const response = await fetch(
           `/api/portfolio/${encodeURIComponent(user.username)}`
         );
-        if (!response.ok)
-          throw new Error("Failed to load portfolio from backend");
+        if (!response.ok) throw new Error("Failed to load portfolio");
         const tokens = await response.json();
 
         if (!Array.isArray(tokens) || tokens.length === 0) {
-          setPortfolio([]);
+          if (isActive) setPortfolio([]);
           return;
         }
 
         const ids = tokens.map((t) => t.name).join(",");
         let prices = {};
         if (ids) {
-          const priceResp = await fetch(
-            `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`,
-            VITE_COINGECKO_KEY
-              ? { headers: { "x-cg-demo-api-key": VITE_COINGECKO_KEY } }
-              : undefined
+          const priceResponse = await fetch(
+            `/api/prices?ids=${encodeURIComponent(ids)}`
           );
-          prices = await priceResp.json();
+          if (!priceResponse.ok) throw new Error("Failed to load prices");
+          prices = await priceResponse.json();
         }
 
         const tokenData = tokens.map((t) => {
@@ -44,12 +42,23 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
           return { name: t.name, amount, price, value: price * amount };
         });
 
-        setPortfolio(tokenData);
+        if (isActive) setPortfolio(tokenData);
       } catch (error) {
-        console.error("Error loading portfolio:", error);
+        if (isActive) console.error("Error loading portfolio:", error);
       }
     })();
+    return () => {
+      isActive = false;
+    };
   }, [user?.username, setPortfolio]);
+
+  if (!user?.username) {
+    return (
+      <div className="myProfile">
+        <h2>Sign in to see your portfolio</h2>
+      </div>
+    );
+  }
 
   async function addToken() {
     if (!tokenInput || !amountInput) return;
@@ -71,10 +80,11 @@ export default function MyProfile({ user, portfolio, setPortfolio }) {
             : token
         );
       } else {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/simple/price?ids=${tokenInput}&vs_currencies=usd`
+        const priceResponse = await fetch(
+          `/api/prices?ids=${encodeURIComponent(tokenInput)}`
         );
-        const priceData = await response.json();
+        if (!priceResponse.ok) throw new Error("Failed to load prices");
+        const priceData = await priceResponse.json();
         const price = priceData[tokenInput]?.usd || 0;
         const value = price * newAmount;
 
