@@ -6,7 +6,7 @@ import Banner from "../Banner/Banner";
 import "./Navbar.css";
 import "./Logoutbtn.css";
 import "./MyProfileButton.css";
-import bull from "../../images/transBull.png";
+import bull from "../../../images/logo.png";
 
 function Navbar({ userHandlers, setSelectedToken, handleToMainPage }) {
   const {
