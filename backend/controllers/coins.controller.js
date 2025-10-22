@@ -18,7 +18,7 @@ export async function Global(_req, res) {
 
 export async function Markets(req, res) {
   try {
-    const perPage = parseInt(req.query.per_page, 10) || 10;
+    let perPage = parseInt(req.query.per_page, 10) || 10;
     if (perPage > 250) perPage = 250;
     const response = await fetch(
       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${perPage}&page=1`,
