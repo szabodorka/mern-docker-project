@@ -33,7 +33,7 @@ export default function Searchbar({ setSelectedToken }) {
 
   function handleTokenSelect(token) {
     setSelectedToken(token);
-    setQuery(token.name);
+    setQuery("");
     setSuggestionsVisible(false);
   }
 
