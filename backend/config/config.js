@@ -1,9 +1,13 @@
-import localConfig from "./config.local.js";
-
 function parsePort(value, fallback) {
   const parsed = parseInt(value ?? "", 10);
   return Number.isFinite(parsed) ? parsed : fallback;
 }
+
+let localConfig = {};
+try {
+  const local = await import("./config.local.js");
+  localConfig = local?.default ?? {};
+} catch (_) {}
 
 export const config = {
   port: parsePort(process.env.PORT, localConfig.PORT ?? 3005),
